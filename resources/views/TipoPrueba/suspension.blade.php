@@ -12,110 +12,33 @@
                     <form action="{{ url('/su') }}" method="POST" class="form-control">
                         @csrf
                         @if ($message = Session::get('succses'))
-                            <div class="alert alert-success" role="alert">
-                                <h4 class="alert-heading">Exitoso</h4>
-                                <p>{{ $message }}</p>
-                            </div>
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Exitoso</h4>
+                            <p>{{ $message }}</p>
+                        </div>
                         @endif
                         @if ($message = Session::get('error'))
-                            <div class="alert alert-danger" role="alert">
-                                <h4 class="alert-heading">Error</h4>
-                                <p>{{ $message }}</p>
-                            </div>
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">Error</h4>
+                            <p>{{ $message }}</p>
+                        </div>
                         @endif
-                        <div class="row">
-                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                <button style="width: 100%; height: 55px;" class="btn btn-outline-primary"
-                                    id="btn-actuplacas" {{ back() }}>Actualizar placas</button>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button style="width: 100%; height: 55px;" class="btn btn-outline-success"
-                                    id="btn-buscar-placa">Buscar datos</button>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center;">
-                                    <label class="input-group-text" for="inputGroupSelect01">Seleccionar placa</label>
-                                    <select class="form-select selPlaca" id="inputGroupSelect01" style="height: 58px"
-                                        name="selPlaca">
-                                        <option selected>Placas</option>
-                                        @foreach ($placas as $placa)
-                                            <option value="{{ $placa->idprueba . '-' . $placa->placa }}">
-                                                {{ $placa->placa }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
 
-                        </div>
+                        <x-vehicle-selector
+                            :placas="$placas"
+                            :usuarios="$usuarios"
+                            :maquinas="$maquinas" />
                         <div class="row">
-                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                <div class="input-group mb-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" name="Vplaca" class="form-control Vplaca"
-                                            id="floatingInput" placeholder="name@example.com" disabled>
-                                        <input type="hidden" name="idprueba" id="idprueba" class="form-control">
-                                        <input type="hidden" name="placa" id="placa" class="form-control">
-                                        <label for="floatingInput">Placa seleccionada</label>
-                                        @if ($errors->has('idprueba'))
-                                            <span class="error text-danger">{{ $errors->first('idprueba') }}</span>
-                                        @endif
-                                    </div>
-
-                                </div>
-                            </div>
-                            <?php if (sicov() == 'INDRA') { ?>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button style="width: 100%; height: 55px" class="btn btn-outline-warning"
-                                    id="btn-evento" {{ back() }}>Evento inicial</button>
-                            </div>
-                            <?php } ?>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Estado</label>
-                                    <select class="form-select selEstado" id="inputGroupSelect01" name="selEstado">
-                                        <option value="2">Aprobado</option>
-                                        <option value="1">Rechazadao</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-4" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Usuarios</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selUsuario"
-                                        id="selUsuario">
-                                        @foreach ($usuarios as $us)
-                                            <option value="{{ $us->IdUsuario }}">{{ $us->nombre }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-5 col-lg-5" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Maquinas</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selMaquina"
-                                        id="selMaquina">
-                                        @foreach ($maquinas as $ma)
-                                            <option value="{{ $ma->idmaquina }}">{{ $ma->maquina }} </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('selMaquina'))
-                                        <span class="error text-danger">{{ $errors->first('selMaquina') }}</span>
-                                    @endif
-
-                                </div>
-                            </div>
 
                             <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
                                 <div class="input-group mb-3" style="align-content: center">
                                     <div class="form-floating mb-3">
-                                        <input type="number" class="form-control" step="0.01" 
+                                        <input type="number" class="form-control" step="0.01"
                                             name="eje1d" id="eje1d" placeholder="1"
                                             value="{{ old('eje1d') }}">
                                         <label for="floatingInput">Eje 1 Derecha</label>
                                         @if ($errors->has('eje1d'))
-                                            <span class="error text-danger">{{ $errors->first('eje1d') }}</span>
+                                        <span class="error text-danger">{{ $errors->first('eje1d') }}</span>
                                         @endif
                                     </div>
 
@@ -124,12 +47,12 @@
                             <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
                                 <div class="input-group mb-3" style="align-content: center">
                                     <div class="form-floating mb-3">
-                                        <input type="number" step="0.01" class="form-control" 
+                                        <input type="number" step="0.01" class="form-control"
                                             placeholder="2" name="eje1i" id="eje1i"
                                             value="{{ old('eje1i') }}">
                                         <label for="floatingInput">Eje 1 Izquierda</label>
                                         @if ($errors->has('eje1i'))
-                                            <span class="error text-danger">{{ $errors->first('eje1i') }}</span>
+                                        <span class="error text-danger">{{ $errors->first('eje1i') }}</span>
                                         @endif
                                     </div>
 
@@ -138,12 +61,12 @@
                             <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
                                 <div class="input-group mb-3" style="align-content: center">
                                     <div class="form-floating mb-3">
-                                        <input type="number" step="0.01" class="form-control" 
+                                        <input type="number" step="0.01" class="form-control"
                                             placeholder="3" name="eje2d" id="eje2d"
                                             value="{{ old('eje2d') }}">
                                         <label for="floatingInput">Eje 2 Derecha</label>
                                         @if ($errors->has('eje2d'))
-                                            <span class="error text-danger">{{ $errors->first('eje2d') }}</span>
+                                        <span class="error text-danger">{{ $errors->first('eje2d') }}</span>
                                         @endif
                                     </div>
 
@@ -152,12 +75,12 @@
                             <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
                                 <div class="input-group mb-3" style="align-content: center">
                                     <div class="form-floating mb-3">
-                                        <input type="number" step="0.01" class="form-control" 
+                                        <input type="number" step="0.01" class="form-control"
                                             placeholder="4" name="eje2i" id="eje2i"
                                             value="{{ old('eje2i') }}">
                                         <label for="floatingInput">Eje 2 Izquierda</label>
                                         @if ($errors->has('eje2i'))
-                                            <span class="error text-danger">{{ $errors->first('eje2i') }}</span>
+                                        <span class="error text-danger">{{ $errors->first('eje2i') }}</span>
                                         @endif
                                     </div>
 
@@ -203,17 +126,27 @@
         $(".Vplaca").val(placa2[1]);
         $("#idprueba").val(placa2[0]);
         $("#placa").val(placa2[1]);
+        $("#btn-buscar-placa").click();
 
 
     });
     $("#btn-evento").click(function(ev) {
         ev.preventDefault();
+        document.getElementById("btn-evento").disabled = true;
         if ($(".Vplaca").val() == null || $(".Vplaca").val() == "") {
             Toast.fire({
                 icon: "error",
-                title: "Seleccione una placa"
+                title: "Seleccione una placa",
+                position: "bottom-end"
             });
+            document.getElementById("btn-evento").disabled = false;
         } else {
+            Toast.fire({
+                icon: "info",
+                title: "Creando evento...",
+                timeout: 1000,
+                position: "bottom-end"
+            });
             $.ajax({
                 url: 'getevento/',
                 type: 'post',
@@ -227,10 +160,16 @@
                     _token: $("input[name='_token']").val()
                 },
                 success: function(data, textStatus, jqXHR) {
+                    document.getElementById("btn-evento").disabled = false;
                     Toast.fire({
                         icon: "success",
-                        title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos."
+                        title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos.",
+                        timeout: 1000,
+                        position: "bottom-end"
                     });
+
+                    // Luego mostrar el toast con un pequeño delay
+                    iniciarContadorRegresivo();
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -243,6 +182,85 @@
         }
 
     });
+
+    // Configuración del tiempo (en segundos) - puedes modificar este valor
+    const TIEMPO_PRUEBA = 60; // 5 minutos = 300 segundos
+
+    // Función para iniciar el contador regresivo
+    function iniciarContadorRegresivo() {
+        let tiempoRestante = TIEMPO_PRUEBA;
+        let intervalo;
+
+        // Crear o actualizar el elemento del contador
+        let contadorElemento = $("#contador-regresivo");
+        if (contadorElemento.length === 0) {
+            $("body").append(`
+            <div id="contador-regresivo" style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f8f9fa;
+                border: 2px solid #007bff;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                text-align: center;
+                min-width: 150px;
+            ">
+                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
+                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
+                    ${formatearTiempo(tiempoRestante)}
+                </div>
+                
+            </div>
+        `);
+        }
+
+        // Mostrar el contador
+        $("#contador-regresivo").show();
+
+        // Función para actualizar el contador
+        function actualizarContador() {
+            tiempoRestante--;
+
+            // Actualizar display
+            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
+
+            // Cambiar color según el tiempo
+            if (tiempoRestante <= 60) {
+                $("#tiempo-display").css("color", "#dc3545"); // Rojo
+            } else if (tiempoRestante <= 120) {
+                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
+            }
+
+            // Cuando el tiempo se acaba
+            if (tiempoRestante <= 0) {
+                clearInterval(intervalo);
+                $("#tiempo-display").text("00:00");
+
+                // Mostrar alerta
+                Toast.fire({
+                    icon: "warning",
+                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
+                    position: "bottom-end"
+                });
+            }
+        }
+
+        // Iniciar el intervalo
+        intervalo = setInterval(actualizarContador, 1000);
+
+
+    }
+
+    // Función para formatear el tiempo (segundos a MM:SS)
+    function formatearTiempo(segundos) {
+        const minutos = Math.floor(segundos / 60);
+        const segundosRestantes = segundos % 60;
+        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
+    }
+
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();
 
@@ -265,9 +283,23 @@
                     _token: $("input[name='_token']").val()
                 },
                 success: function(data, textStatus, jqXHR) {
-                    
+
                     if (data.length > 0) {
                         $.each(data, function(i, res) {
+                            if (res.estado == 1) {
+                                Toast.fire({
+                                    icon: "info",
+                                    title: "La prueba que se trajo esta en estado <span style='color: #dc3545; font-weight: bold;'>RECHAZADA</span>, por favor verifique bien los datos antes de enviarla nuevamente.",
+                                    timeout: 100000
+                                });
+                            }
+                            if (res.estado == 9) {
+                                Toast.fire({
+                                    icon: "info",
+                                    title: "La prueba que se trajo esta en estado <span style='color: #dc3545; font-weight: bold;'>REASIGNADA</span>, por favor verifique bien los datos antes de enviarla nuevamente.",
+                                    timeout: 100000
+                                });
+                            }
                             if (res.observacion == 'Suspensión delantera derecha' || res.observacion == 'Suspension delantera derecha')
                                 $("#eje1d").val(res.valor);
                             if (res.observacion == 'Suspensión delantera izquierda' || res.observacion == 'Suspension delantera izquierda')

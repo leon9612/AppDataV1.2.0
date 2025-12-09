@@ -15,63 +15,28 @@
                     <form action="{{ url('/frm') }}" method="POST" class="form-control">
                         @csrf
                         @if ($message = Session::get('succses'))
-                            <div class="alert alert-success" role="alert">
-                                <h4 class="alert-heading">Exitoso</h4>
-                                <p>{{ $message }}</p>
-                            </div>
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Exitoso</h4>
+                            <p>{{ $message }}</p>
+                        </div>
                         @endif
                         @if ($message = Session::get('error'))
-                            <div class="alert alert-danger" role="alert">
-                                <h4 class="alert-heading">Error</h4>
-                                <p>{{ $message }}</p>
-                            </div>
-                        @endif
-                        <div class="row">
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button class="btn btn-outline-primary" id="btn-actuplacas"
-                                    {{ back() }}>Actualizar placas</button>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button style="width: 100%; " class="btn btn-outline-success"
-                                    id="btn-buscar-placa">Buscar datos</button>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="input-group mb-3" style="align-content: center;">
-                                    <label class="input-group-text" for="inputGroupSelect01">Seleccionar placa</label>
-                                    <select class="form-select selPlaca" id="inputGroupSelect01" name="selPlaca">
-                                        <option selected>Placas</option>
-                                        @foreach ($placas as $placa)
-                                            <option value="{{ $placa->idprueba . '-' . $placa->placa }}">
-                                                {{ $placa->placa }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">Error</h4>
+                            <p>{{ $message }}</p>
                         </div>
+                        @endif
+                        <x-vehicle-selector
+                            :placas="$placas"
+                            :usuarios="$usuarios"
+                            :maquinas="$maquinas" />
                         <div class="row">
-                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                <div class="mb-1">
-                                    <input type="text" name="Vplaca" class="form-control Vplaca" id="floatingInput"
-                                        placeholder="Placa seleccionada" disabled>
-                                    <input type="hidden" name="idprueba" id="idprueba" class="form-control">
-                                    <input type="hidden" name="placa" id="placa" class="form-control">
-                                    @if ($errors->has('idprueba'))
-                                        <span class="error text-danger">{{ $errors->first('idprueba') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <?php if (sicov() == 'INDRA') { ?>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button style="width: 100%;" class="btn btn-outline-warning" id="btn-evento"
-                                    {{ back() }}>Evento inicial</button>
-                            </div>
-                            <?php } ?>
+
                             <div class="col-sm-12 col-md-4 col-lg-4">
                                 <div class="input-group mb-3" style="align-content: center;">
                                     <label class="input-group-text" for="inputGroupSelect01">Doble Peso Motos</label>
                                     <select class="form-select doblePeso" id="inputGroupSelect01" name="selPlaca">
-                                        <option value="SI" >SI</option>
+                                        <option value="SI">SI</option>
                                         <option value="NO" selected>NO</option>
 
                                     </select>
@@ -79,121 +44,105 @@
                             </div>
 
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Estado</label>
-                                    <select class="form-select selEstado" id="inputGroupSelect01" name="selEstado">
-                                        <option value="2">Aprobado</option>
-                                        <option value="1">Rechazadao</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-4">
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Usuarios</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selUsuario"
-                                        id="selUsuario">
-                                        @foreach ($usuarios as $us)
-                                            <option value="{{ $us->IdUsuario }}">{{ $us->nombre }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-5 col-lg-5">
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Maquinas</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selMaquina"
-                                        id="selMaquina">
-                                        @foreach ($maquinas as $ma)
-                                            <option value="{{ $ma->idmaquina }}">{{ $ma->maquina }} </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('selMaquina'))
-                                        <span class="error text-danger">{{ $errors->first('selMaquina') }}</span>
-                                    @endif
 
-                                </div>
-                            </div>
-                            <br>
-                            <div class="container" style=" margin-top: 2%; justify-content: center; display: flex ">
-                                <div class="row">
-                                    <label
-                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; background-color: lemonchiffon; width: 100%">DATOS
-                                        MOTOS</label>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
-                                        <div class="col-sm-12 col-md-3 col-lg-3">
-                                            <div class="mb-1">
-                                                <input type="text" class="form-control" id="pesaje1d"
-                                                    placeholder="Pesaje eje 1" name="pesaje1d"
-                                                    value="{{ old('pesaje1d') }}">
-                                                @if ($errors->has('pesaje1d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje1d') }}</span>
-                                                @endif
-                                            </div>
+                        <br>
+                        <div class="container" style=" margin-top: 2%; justify-content: center; display: flex ">
+                            <div class="row">
+                                <label
+                                    style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; background-color: lemonchiffon; width: 100%">DATOS
+                                    MOTOS</label>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                    <div class="col-sm-12 col-md-3 col-lg-3">
+                                        <div class="mb-1">
+                                            <input type="text" class="form-control" id="pesaje1d"
+                                                placeholder="Pesaje eje 1" name="pesaje1d"
+                                                value="{{ old('pesaje1d') }}">
+                                            @if ($errors->has('pesaje1d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje1d') }}</span>
+                                            @endif
                                         </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3" id="divDoblePeso"
-                                            style="display: none;">
-                                            <div class="mb-1">
-                                                <input type="text" class="form-control" id="pesaje2d"
-                                                    placeholder="Pesaje eje 2" name="pesaje2d"
-                                                    value="{{ old('pesaje2d') }}">
-                                                {{-- @if ($errors->has('pesaje1d'))
+                                    </div>
+                                    <div class="col-sm-12 col-md-3 col-lg-3" id="divDoblePeso"
+                                        style="display: none;">
+                                        <div class="mb-1">
+                                            <input type="text" class="form-control" id="pesaje2d"
+                                                placeholder="Pesaje eje 2" name="pesaje2d"
+                                                value="{{ old('pesaje2d') }}">
+                                            {{-- @if ($errors->has('pesaje2d'))
                                                     <span
-                                                        class="error text-danger">{{ $errors->first('pesaje1d') }}</span>
-                                                @endif --}}
-                                            </div>
+                                                        class="error text-danger">{{ $errors->first('pesaje2d') }}</span>
+                                            @endif --}}
                                         </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3">
-                                            <div class="mb-1">
-                                                <input type="text" class="form-control" name="fuerza1d"
-                                                    id="fuerza1d" placeholder="Freno eje 1"
-                                                    value="{{ old('fuerza1d') }}">
-                                                @if ($errors->has('fuerza1d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza1d') }}</span>
-                                                @endif
-                                            </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3 col-lg-3">
+                                        <div class="mb-1">
+                                            <input type="text" class="form-control" name="fuerza1d"
+                                                id="fuerza1d" placeholder="Freno eje 1"
+                                                value="{{ old('fuerza1d') }}">
+                                            @if ($errors->has('fuerza1d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza1d') }}</span>
+                                            @endif
                                         </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza1i" id="fuerza1i" placeholder="Freno eje 1"
-                                                    value="{{ old('fuerza1i') }}">
-                                                @if ($errors->has('fuerza1i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza1i') }}</span>
-                                                @endif
-                                            </div>
-
+                                    </div>
+                                    <div class="col-sm-12 col-md-3 col-lg-3">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza1i" id="fuerza1i" placeholder="Freno eje 1"
+                                                value="{{ old('fuerza1i') }}">
+                                            @if ($errors->has('fuerza1i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza1i') }}</span>
+                                            @endif
                                         </div>
 
                                     </div>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
 
-                                        <div class="col-sm-12 col-md-2 col-lg-2">
-                                            <button style="width: 100%; height: 55px;" class="btn btn-outline-success"
-                                                id="btn-Guardar" type="submit">Guardar</button>
+
+                                </div>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control"
+                                                placeholder="Eficacia total" name="efitotal" id="efitotal"
+                                                value="{{ old('efitotal') }}" disabled>
+                                            <input type="hidden" class="form-control"
+                                                name="efitotal_" id="efitotal_">
+                                            @if ($errors->has('efitotal'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('efitotal') }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <button style="width: 100%; height: 55px;"
+                                            class="btn btn-outline-secondary" id="btn-calcular">Calcular
+                                            datos</button>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <button style="width: 100%; height: 55px;" class="btn btn-outline-success"
+                                            id="btn-Guardar" disabled type="submit">Guardar</button>
+                                    </div>
+                                </div>
                             </div>
-
-
-
                         </div>
 
-                    </form>
+
 
                 </div>
+
+                </form>
+
+            </div>
     </section>
     <!-- ======= Contact Section ======= -->
 </main>
 
 @include('layout.footer')
 <script type="text/javascript">
-
     $(".doblePeso").change(function() {
         if ($(".doblePeso").val() == "SI") {
             localStorage.setItem("doblePeso", "SI");
@@ -232,136 +181,145 @@
         $(".Vplaca").val(placa2[1]);
         $("#idprueba").val(placa2[0]);
         $("#placa").val(placa2[1]);
-
+        $("#btn-buscar-placa").click();
 
     });
 
     $("#btn-calcular").click(function(ev) {
         ev.preventDefault()
         document.getElementById("btn-Guardar").disabled = false;
-        var sumFuerza = parseFloat($("#fuerza1d").val()) + parseFloat($("#fuerza1i").val()) + parseFloat($(
-            "#fuerza2d").val()) + parseFloat($("#fuerza2i").val())
-        var peso = parseFloat($("#pesaje1d").val()) + parseFloat($("#pesaje1i").val()) + parseFloat($(
-            "#pesaje2d").val()) + parseFloat($("#pesaje2i").val())
-        if (parseFloat($("#pesaje3d").val()) !== "" || parseFloat($("#pesaje3i").val()) !== "") {
-            peso = peso + (parseFloat($("#pesaje3d").val()) + parseFloat($("#pesaje3i").val()))
-        }
-        if (parseFloat($("#pesaje4d").val()) !== "" || parseFloat($("#pesaje4i").val()) !== "") {
-            peso = peso + (parseFloat($("#pesaje4d").val()) + parseFloat($("#pesaje4i").val()))
-        }
-        if (parseFloat($("#pesaje5d").val()) !== "" || parseFloat($("#pesaje5i").val()) !== "") {
-            peso = peso + (parseFloat($("#pesaje5d").val()) + parseFloat($("#pesaje5i").val()))
-        }
-        var auxiliar = parseFloat($("#fuerzaauxd").val()) + parseFloat($("#fuerzaauxi").val())
-        if (parseFloat($("#fuerza1d").val()) > parseFloat($("#fuerza1i").val())) {
-            var des1f = parseFloat($("#fuerza1d").val()) - parseFloat($("#fuerza1i").val())
-            des1f = Math.ceil(((des1f / parseFloat($("#fuerza1d").val())) * 100)).toString()
-            des1f = des1f.substring(0, 2)
-            $("#deseje1").val(des1f)
-            $("#deseje1_").val(des1f)
-        } else {
-            var des1f = parseFloat($("#fuerza1i").val()) - parseFloat($("#fuerza1d").val())
-            des1f = Math.ceil(((des1f / parseFloat($("#fuerza1i").val())) * 100)).toString()
-            des1f = des1f.substring(0, 2)
-            $("#deseje1").val(des1f)
-            $("#deseje1_").val(des1f)
-            //$("#deseje1").val(parseFloat($("#fuerza1i").val()) - parseFloat($("#fuerza1d").val()) * 100) 
-        }
+        var sumFuerza = parseFloat($("#fuerza1d").val()) + parseFloat($("#fuerza1i").val());
+        var peso = parseFloat($("#pesaje1d").val());
 
-        if (parseFloat($("#fuerza2d").val()) > parseFloat($("#fuerza2i").val())) {
-            var des2f = parseFloat($("#fuerza2d").val()) - parseFloat($("#fuerza2i").val())
-            des2f = Math.ceil(((des2f / parseFloat($("#fuerza2d").val())) * 100)).toString()
-            des2f = des2f.substring(0, 2)
-            console.log(des2f)
-            $("#deseje2").val(des2f)
-            $("#deseje2_").val(des2f)
-        } else {
-            var des2f = parseFloat($("#fuerza2i").val()) - parseFloat($("#fuerza2d").val())
-            des2f = Math.ceil(((des2f / parseFloat($("#fuerza2i").val())) * 100)).toString()
-            des2f = des2f.substring(0, 2)
-            console.log(des2f)
-            $("#deseje2").val(des2f)
-            $("#deseje2_").val(des2f)
+        if ($("#pesaje2d").val() !== "") {
 
+            peso = peso + parseFloat($("#pesaje2d").val());
         }
-        if (parseFloat($("#fuerza3d").val()) !== "" || parseFloat($("#fuerza3i").val()) !== "") {
-            sumFuerza = sumFuerza + (parseFloat($("#fuerza3d").val()) + parseFloat($("#fuerza3i").val()));
-            if (parseFloat($("#fuerza3d").val()) > parseFloat($("#fuerza3i").val())) {
-                var des2f = parseFloat($("#fuerza3d").val()) - parseFloat($("#fuerza3i").val())
-                des2f = Math.ceil(((des2f / parseFloat($("#fuerza3d").val())) * 100)).toString()
-                des2f = des2f.substring(0, 2)
-                console.log(des2f)
-                $("#deseje3").val(des2f)
-                $("#deseje3_").val(des2f)
-            } else {
-                var des2f = parseFloat($("#fuerza3i").val()) - parseFloat($("#fuerza3d").val())
-                des2f = Math.ceil(((des2f / parseFloat($("#fuerza3i").val())) * 100)).toString()
-                des2f = des2f.substring(0, 2)
-                console.log(des2f)
-                $("#deseje3").val(des2f)
-                $("#deseje3_").val(des2f)
+        // if (parseFloat($("#pesaje4d").val()) !== "" || parseFloat($("#pesaje4i").val()) !== "") {
+        //     peso = peso + (parseFloat($("#pesaje4d").val()) + parseFloat($("#pesaje4i").val()))
+        // }
+        // if (parseFloat($("#pesaje5d").val()) !== "" || parseFloat($("#pesaje5i").val()) !== "") {
+        //     peso = peso + (parseFloat($("#pesaje5d").val()) + parseFloat($("#pesaje5i").val()))
+        // }
+        // var auxiliar = parseFloat($("#fuerzaauxd").val()) + parseFloat($("#fuerzaauxi").val())
+        // if (parseFloat($("#fuerza1d").val()) > parseFloat($("#fuerza1i").val())) {
+        //     var des1f = parseFloat($("#fuerza1d").val()) - parseFloat($("#fuerza1i").val())
+        //     des1f = Math.ceil(((des1f / parseFloat($("#fuerza1d").val())) * 100)).toString()
+        //     des1f = des1f.substring(0, 2)
+        //     $("#deseje1").val(des1f)
+        //     $("#deseje1_").val(des1f)
+        // } else {
+        //     var des1f = parseFloat($("#fuerza1i").val()) - parseFloat($("#fuerza1d").val())
+        //     des1f = Math.ceil(((des1f / parseFloat($("#fuerza1i").val())) * 100)).toString()
+        //     des1f = des1f.substring(0, 2)
+        //     $("#deseje1").val(des1f)
+        //     $("#deseje1_").val(des1f)
+        //     //$("#deseje1").val(parseFloat($("#fuerza1i").val()) - parseFloat($("#fuerza1d").val()) * 100) 
+        // }
 
-            }
-        }
-        if (parseFloat($("#fuerza4d").val()) !== "" || parseFloat($("#fuerza4i").val()) !== "") {
-            sumFuerza = sumFuerza + (parseFloat($("#fuerza4d").val()) + parseFloat($("#fuerza4i").val()));
-            if (parseFloat($("#fuerza4d").val()) > parseFloat($("#fuerza4i").val())) {
-                var des2f = parseFloat($("#fuerza4d").val()) - parseFloat($("#fuerza4i").val())
-                des2f = Math.ceil(((des2f / parseFloat($("#fuerza4d").val())) * 100)).toString()
-                des2f = des2f.substring(0, 2)
-                console.log(des2f)
-                $("#deseje4").val(des2f)
-                $("#deseje4_").val(des2f)
-            } else {
-                var des2f = parseFloat($("#fuerza4i").val()) - parseFloat($("#fuerza4d").val())
-                des2f = Math.ceil(((des2f / parseFloat($("#fuerza4i").val())) * 100)).toString()
-                des2f = des2f.substring(0, 2)
-                console.log(des2f)
-                $("#deseje4").val(des2f)
-                $("#deseje4_").val(des2f)
+        // if (parseFloat($("#fuerza2d").val()) > parseFloat($("#fuerza2i").val())) {
+        //     var des2f = parseFloat($("#fuerza2d").val()) - parseFloat($("#fuerza2i").val())
+        //     des2f = Math.ceil(((des2f / parseFloat($("#fuerza2d").val())) * 100)).toString()
+        //     des2f = des2f.substring(0, 2)
+        //     console.log(des2f)
+        //     $("#deseje2").val(des2f)
+        //     $("#deseje2_").val(des2f)
+        // } else {
+        //     var des2f = parseFloat($("#fuerza2i").val()) - parseFloat($("#fuerza2d").val())
+        //     des2f = Math.ceil(((des2f / parseFloat($("#fuerza2i").val())) * 100)).toString()
+        //     des2f = des2f.substring(0, 2)
+        //     console.log(des2f)
+        //     $("#deseje2").val(des2f)
+        //     $("#deseje2_").val(des2f)
 
-            }
-        }
-        if (parseFloat($("#fuerza5d").val()) !== "" || parseFloat($("#fuerza5i").val()) !== "") {
-            sumFuerza = sumFuerza + (parseFloat($("#fuerza5d").val()) + parseFloat($("#fuerza5i").val()));
-            if (parseFloat($("#fuerza5d").val()) > parseFloat($("#fuerza5i").val())) {
-                var des2f = parseFloat($("#fuerza5d").val()) - parseFloat($("#fuerza5i").val())
-                des2f = Math.ceil(((des2f / parseFloat($("#fuerza5d").val())) * 100)).toString()
-                des2f = des2f.substring(0, 2)
-                console.log(des2f)
-                $("#deseje4").val(des2f)
-                $("#deseje4_").val(des2f)
-            } else {
-                var des2f = parseFloat($("#fuerza5i").val()) - parseFloat($("#fuerza5d").val())
-                des2f = Math.ceil(((des2f / parseFloat($("#fuerza5i").val())) * 100)).toString()
-                des2f = des2f.substring(0, 2)
-                console.log(des2f)
-                $("#deseje5").val(des2f)
-                $("#deseje5_").val(des2f)
+        // }
+        // if (parseFloat($("#fuerza3d").val()) !== "" || parseFloat($("#fuerza3i").val()) !== "") {
+        //     sumFuerza = sumFuerza + (parseFloat($("#fuerza3d").val()) + parseFloat($("#fuerza3i").val()));
+        //     if (parseFloat($("#fuerza3d").val()) > parseFloat($("#fuerza3i").val())) {
+        //         var des2f = parseFloat($("#fuerza3d").val()) - parseFloat($("#fuerza3i").val())
+        //         des2f = Math.ceil(((des2f / parseFloat($("#fuerza3d").val())) * 100)).toString()
+        //         des2f = des2f.substring(0, 2)
+        //         console.log(des2f)
+        //         $("#deseje3").val(des2f)
+        //         $("#deseje3_").val(des2f)
+        //     } else {
+        //         var des2f = parseFloat($("#fuerza3i").val()) - parseFloat($("#fuerza3d").val())
+        //         des2f = Math.ceil(((des2f / parseFloat($("#fuerza3i").val())) * 100)).toString()
+        //         des2f = des2f.substring(0, 2)
+        //         console.log(des2f)
+        //         $("#deseje3").val(des2f)
+        //         $("#deseje3_").val(des2f)
 
-            }
-        }
+        //     }
+        // }
+        // if (parseFloat($("#fuerza4d").val()) !== "" || parseFloat($("#fuerza4i").val()) !== "") {
+        //     sumFuerza = sumFuerza + (parseFloat($("#fuerza4d").val()) + parseFloat($("#fuerza4i").val()));
+        //     if (parseFloat($("#fuerza4d").val()) > parseFloat($("#fuerza4i").val())) {
+        //         var des2f = parseFloat($("#fuerza4d").val()) - parseFloat($("#fuerza4i").val())
+        //         des2f = Math.ceil(((des2f / parseFloat($("#fuerza4d").val())) * 100)).toString()
+        //         des2f = des2f.substring(0, 2)
+        //         console.log(des2f)
+        //         $("#deseje4").val(des2f)
+        //         $("#deseje4_").val(des2f)
+        //     } else {
+        //         var des2f = parseFloat($("#fuerza4i").val()) - parseFloat($("#fuerza4d").val())
+        //         des2f = Math.ceil(((des2f / parseFloat($("#fuerza4i").val())) * 100)).toString()
+        //         des2f = des2f.substring(0, 2)
+        //         console.log(des2f)
+        //         $("#deseje4").val(des2f)
+        //         $("#deseje4_").val(des2f)
+
+        //     }
+        // }
+        // if (parseFloat($("#fuerza5d").val()) !== "" || parseFloat($("#fuerza5i").val()) !== "") {
+        //     sumFuerza = sumFuerza + (parseFloat($("#fuerza5d").val()) + parseFloat($("#fuerza5i").val()));
+        //     if (parseFloat($("#fuerza5d").val()) > parseFloat($("#fuerza5i").val())) {
+        //         var des2f = parseFloat($("#fuerza5d").val()) - parseFloat($("#fuerza5i").val())
+        //         des2f = Math.ceil(((des2f / parseFloat($("#fuerza5d").val())) * 100)).toString()
+        //         des2f = des2f.substring(0, 2)
+        //         console.log(des2f)
+        //         $("#deseje4").val(des2f)
+        //         $("#deseje4_").val(des2f)
+        //     } else {
+        //         var des2f = parseFloat($("#fuerza5i").val()) - parseFloat($("#fuerza5d").val())
+        //         des2f = Math.ceil(((des2f / parseFloat($("#fuerza5i").val())) * 100)).toString()
+        //         des2f = des2f.substring(0, 2)
+        //         console.log(des2f)
+        //         $("#deseje5").val(des2f)
+        //         $("#deseje5_").val(des2f)
+
+        //     }
+        // }
         console.log("fuerza" + sumFuerza)
         console.log("peso" + peso)
 
-        var eficatotal = ((sumFuerza / peso) * 100).toString();
-        eficatotal = eficatotal.substring(0, 3);
-        $("#efitotal").val(eficatotal);
-        $("#efitotal_").val(eficatotal);
-        var efiaux = ((auxiliar / peso) * 100).toString();
-        efiaux = efiaux.substring(0, 3);
-        $("#efiaux").val(efiaux);
-        $("#efiaux_").val(efiaux);
+        var eficatotal = ((sumFuerza / peso) * 100)
+        eficatotal = ((eficatotal * 100) / 100);
+        $("#efitotal").val(eficatotal.toFixed(2));
+        $("#efitotal_").val(eficatotal.toFixed(2));
+        // var efiaux = ((auxiliar / peso) * 100).toString();
+        // efiaux = efiaux.substring(0, 3);
+        // $("#efiaux").val(efiaux);
+        // $("#efiaux_").val(efiaux);
     })
 
     $("#btn-evento").click(function(ev) {
         ev.preventDefault();
+        document.getElementById("btn-evento").disabled = true;
         if ($(".Vplaca").val() == null || $(".Vplaca").val() == "") {
             Toast.fire({
                 icon: "error",
-                title: "Seleccione una placa"
+                title: "Seleccione una placa",
+                position: "bottom-end"
             });
+            document.getElementById("btn-evento").disabled = false;
         } else {
+            Toast.fire({
+                icon: "info",
+                title: "Creando evento...",
+                timeout: 1000,
+                position: "bottom-end"
+            });
             $.ajax({
                 url: 'getevento/',
                 type: 'post',
@@ -375,10 +333,16 @@
                     _token: $("input[name='_token']").val()
                 },
                 success: function(data, textStatus, jqXHR) {
+                    document.getElementById("btn-evento").disabled = false;
                     Toast.fire({
                         icon: "success",
-                        title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos."
+                        title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos.",
+                        timeout: 1000,
+                        position: "bottom-end"
                     });
+
+                    // Luego mostrar el toast con un pequeño delay
+                    iniciarContadorRegresivo();
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -390,7 +354,86 @@
             });
         }
 
-    })
+    });
+
+    // Configuración del tiempo (en segundos) - puedes modificar este valor
+    const TIEMPO_PRUEBA = 80; // 5 minutos = 300 segundos
+
+    // Función para iniciar el contador regresivo
+    function iniciarContadorRegresivo() {
+        let tiempoRestante = TIEMPO_PRUEBA;
+        let intervalo;
+
+        // Crear o actualizar el elemento del contador
+        let contadorElemento = $("#contador-regresivo");
+        if (contadorElemento.length === 0) {
+            $("body").append(`
+            <div id="contador-regresivo" style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f8f9fa;
+                border: 2px solid #007bff;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                text-align: center;
+                min-width: 150px;
+            ">
+                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
+                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
+                    ${formatearTiempo(tiempoRestante)}
+                </div>
+                
+            </div>
+        `);
+        }
+
+        // Mostrar el contador
+        $("#contador-regresivo").show();
+
+        // Función para actualizar el contador
+        function actualizarContador() {
+            tiempoRestante--;
+
+            // Actualizar display
+            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
+
+            // Cambiar color según el tiempo
+            if (tiempoRestante <= 60) {
+                $("#tiempo-display").css("color", "#dc3545"); // Rojo
+            } else if (tiempoRestante <= 120) {
+                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
+            }
+
+            // Cuando el tiempo se acaba
+            if (tiempoRestante <= 0) {
+                clearInterval(intervalo);
+                $("#tiempo-display").text("00:00");
+
+                // Mostrar alerta
+                Toast.fire({
+                    icon: "warning",
+                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
+                    position: "bottom-end"
+                });
+            }
+        }
+
+        // Iniciar el intervalo
+        intervalo = setInterval(actualizarContador, 1000);
+
+
+    }
+
+    // Función para formatear el tiempo (segundos a MM:SS)
+    function formatearTiempo(segundos) {
+        const minutos = Math.floor(segundos / 60);
+        const segundosRestantes = segundos % 60;
+        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
+    }
+
     $("#btn-buscar-placa").click(function(e) {
         e.preventDefault();
 
@@ -416,12 +459,33 @@
 
                     if (data.length > 0) {
                         $.each(data, function(i, res) {
-                            if (res.observacion == 'Frenos eje 1 derecho')
+                            console.log(data);
+                            if (res.estado == 1) {
+                                Toast.fire({
+                                    icon: "info",
+                                    title: "La prueba que se trajo esta en estado <span style='color: #dc3545; font-weight: bold;'>RECHAZADA</span>, por favor verifique bien los datos antes de enviarla nuevamente.",
+                                    timeout: 100000
+                                });
+                            }
+                            if (res.estado == 9) {
+                                Toast.fire({
+                                    icon: "info",
+                                    title: "La prueba que se trajo esta en estado <span style='color: #dc3545; font-weight: bold;'>REASIGNADA</span>, por favor verifique bien los datos antes de enviarla nuevamente.",
+                                    timeout: 100000
+                                });
+                            }
+                            if (res.observacion.trim() == 'Frenos eje 1 derecho' || res.observacion.trim() == 'Frenos eje 1 Derecho')
                                 $("#fuerza1d").val(res.valor);
-                            if (res.observacion == 'Frenos eje 2 derecho')
+                            if (res.observacion.trim() == 'Frenos eje 2 derecho' || res.observacion.trim() == 'Frenos eje 2 Derecho')
                                 $("#fuerza1i").val(res.valor);
-                            if (res.observacion == 'Pesaje eje 1 derecho')
+                            if (res.observacion == 'Pesaje eje 1 derecho' || res.observacion == 'Pesaje eje 1 Derecho')
                                 $("#pesaje1d").val(res.valor);
+
+                            if (res.observacion == 'Pesaje eje 2 derecho' || res.observacion == 'Pesaje eje 2 Derecho') {
+                                $("#pesaje2d").val(res.valor);
+                                $("#divDoblePeso").show();
+                                $(".doblePeso").val("SI");
+                            }
 
 
 

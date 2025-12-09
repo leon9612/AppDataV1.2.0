@@ -219,6 +219,11 @@
             </div>
 
             <nav id="navbar" class="nav-menu navbar">
+                 <li class="nav-item">
+                        <a href="{{ url('/cpr') }}" class="nav-link scrollto" id="visual">
+                            <i class="bi bi-house"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
                 <ul>
                     <li class="nav-item">
                         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -315,6 +320,11 @@
                     <li class="nav-item">
                         <a href="{{ url('/tax') }}" class="nav-link scrollto" id="tax">
                             <i class="bi bi-speedometer2"></i> <span>Taxímetro</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/fot') }}" class="nav-link scrollto" id="fot">
+                            <i class="bi bi-camera"></i> <span>Fotos</span>
                         </a>
                     </li>
                     

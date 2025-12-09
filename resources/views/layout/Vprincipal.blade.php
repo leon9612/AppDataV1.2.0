@@ -20,7 +20,7 @@
                                 <div class="col-md-12">
                                     <div class="alert alert-info">
                                         <h6 class="alert-heading"><i class="bi bi-info-circle-fill"></i> Funcionalidad Principal</h6>
-                                        <p class="mb-0">Solución especializada con encriptación de datos avanzada para evitar generación de alertas en sistemas TECMMAS o SICOV.</p>
+                                        <p class="mb-0">Solución especializada con encriptación de datos avanzada para evitar generación de alertas en sistemas TECMMAS y SICOV.</p>
                                     </div>
                                     
                                     <div class="alert alert-warning mt-3">

@@ -85,6 +85,7 @@
             success: function(data, textStatus, jqXHR) {
                 console.log(data)
                 $(".selVersion").empty();
+                
                 $(".selVersion").append($('<option>', {
                     value: '',
                     text: 'Seleccione'
@@ -103,19 +104,21 @@
         });
 
     });
+
     $(".selVersion").change(function(e) {
         e.preventDefault();
-        $('.selVersion option:selected').attr('value');
+        // console.log($('.selVersion option:selected').attr('value'))
+        // $('.selVersion option:selected').attr('value');
         $.ajax({
             url: 'https://appdataingeniersoftware.com/appdatacontrol/index.php/Cdispositivo/getActualizacionesFile',
-            type: 'get',
+            type: 'post',
             dataType: 'json',
             data:{
                 file: $('.selVersion option:selected').attr('value'),
             },
             success: function(data, textStatus, jqXHR) {
-                console.log(data)
-                $("#descipcionActualizacion").empty();
+                console.log({data})
+                $("#descipcionActualizacion").html('');
                 $("#descipcionActualizacion").html(data[0].descripcion);
 
             },

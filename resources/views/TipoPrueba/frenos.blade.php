@@ -15,490 +15,414 @@
                     <form action="{{ url('/fr') }}" method="POST" class="form-control">
                         @csrf
                         @if ($message = Session::get('succses'))
-                            <div class="alert alert-success" role="alert">
-                                <h4 class="alert-heading">Exitoso</h4>
-                                <p>{{ $message }}</p>
-                            </div>
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Exitoso</h4>
+                            <p>{{ $message }}</p>
+                        </div>
                         @endif
                         @if ($message = Session::get('error'))
-                            <div class="alert alert-danger" role="alert">
-                                <h4 class="alert-heading">Error</h4>
-                                <p>{{ $message }}</p>
-                            </div>
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">Error</h4>
+                            <p>{{ $message }}</p>
+                        </div>
                         @endif
-                        <div class="row">
-                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                <button style="width: 100%; " class="btn btn-outline-primary" id="btn-actuplacas"
-                                    {{ back() }}>Actualizar placas</button>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button style="width: 100%;" class="btn btn-outline-success"
-                                    id="btn-buscar-placa">Buscar datos</button>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center;">
-                                    <label class="input-group-text" for="inputGroupSelect01">Seleccionar placa</label>
-                                    <select class="form-select selPlaca" id="inputGroupSelect01" name="selPlaca">
-                                        <option selected>Placas</option>
-                                        @foreach ($placas as $placa)
-                                            <option value="{{ $placa->idprueba . '-' . $placa->placa }}">
-                                                {{ $placa->placa }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-4 col-lg-4" style="align-content: center">
-                                <div class="mb-1">
-                                    <input type="text" name="Vplaca" class="form-control Vplaca" id="floatingInput"
-                                        placeholder="Placa seleccionada" disabled>
-                                    <input type="hidden" name="idprueba" id="idprueba" class="form-control">
-                                    <input type="hidden" name="placa" id="placa" class="form-control">
-                                    @if ($errors->has('idprueba'))
-                                        <span class="error text-danger">{{ $errors->first('idprueba') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <?php if (sicov() == 'INDRA') { ?>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <button style="width: 100%;" class="btn btn-outline-warning" id="btn-evento"
-                                    {{ back() }}>Evento inicial</button>
-                            </div>
-                            <?php } ?>
-
-                        </div>
+                        <x-vehicle-selector
+                            :placas="$placas"
+                            :usuarios="$usuarios"
+                            :maquinas="$maquinas" />
                         <br>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Estado</label>
-                                    <select class="form-select selEstado" id="inputGroupSelect01" name="selEstado">
-                                        <option value="2">Aprobado</option>
-                                        <option value="1">Rechazadao</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-4" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Usuarios</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selUsuario"
-                                        id="selUsuario">
-                                        @foreach ($usuarios as $us)
-                                            <option value="{{ $us->IdUsuario }}">{{ $us->nombre }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-5 col-lg-5" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Maquinas</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selMaquina"
-                                        id="selMaquina">
-                                        @foreach ($maquinas as $ma)
-                                            <option value="{{ $ma->idmaquina }}">{{ $ma->maquina }} </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('selMaquina'))
-                                        <span class="error text-danger">{{ $errors->first('selMaquina') }}</span>
-                                    @endif
+                        <div class="container" style=" margin-top: 2%; justify-content: center; display: flex ">
+                            <div class="row">
+                                <label
+                                    style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; background-color: lemonchiffon; width: 100%">PESAJES</label>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
 
-                                </div>
-                            </div>
-                            <br>
-                            <div class="container" style=" margin-top: 2%; justify-content: center; display: flex ">
-                                <div class="row">
-                                    <label
-                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; background-color: lemonchiffon; width: 100%">PESAJES</label>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 1 iz" name="pesaje1i" id="pesaje1i"
-                                                    value="{{ old('pesaje1i') }}">
-                                                @if ($errors->has('pesaje1i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje1i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="text" class="form-control" id="pesaje1d"
-                                                    placeholder="Eje 1 dr" name="pesaje1d"
-                                                    value="{{ old('pesaje1d') }}">
-                                                @if ($errors->has('pesaje1d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje1d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 2 iz" name="pesaje2i" id="pesaje2i"
-                                                    value="{{ old('pesaje2i') }}" style="width: 100%">
-                                                @if ($errors->has('pesaje2i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje2i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 2 dr" name="pesaje2d" id="pesaje2d"
-                                                    value="{{ old('pesaje2d') }}">
-                                                @if ($errors->has('pesaje2d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje2d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 3 iz" name="pesaje3i" id="pesaje3i"
-                                                    value="{{ old('pesaje3i') }}" style="width: 100%">
-                                                @if ($errors->has('pesaje3i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje3i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 3 dr" name="pesaje3d" id="pesaje3d"
-                                                    value="{{ old('pesaje3d') }}" style="width: 100%">
-                                                @if ($errors->has('pesaje3d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje3d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 4 iz" name="pesaje4i" id="pesaje4i"
-                                                    value="{{ old('pesaje4i') }}" style="width: 100%">
-                                                @if ($errors->has('pesaje4i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje4i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 4 dr" name="pesaje4d" id="pesaje4d"
-                                                    value="{{ old('pesaje4d') }}" style="width: 100%">
-                                                @if ($errors->has('pesaje4d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje4d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 5 iz" name="pesaje5i" id="pesaje5i"
-                                                    value="{{ old('pesaje5i') }}" style="width: 100%">
-                                                @if ($errors->has('pesaje5i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje5i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eje 5 dr" name="pesaje5d" id="pesaje5d"
-                                                    value="{{ old('pesaje5d') }}" style="width: 100%">
-                                                @if ($errors->has('pesaje5d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('pesaje5d') }}</span>
-                                                @endif
-                                            </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 1 iz" name="pesaje1i" id="pesaje1i"
+                                                value="{{ old('pesaje1i') }}">
+                                            @if ($errors->has('pesaje1i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje1i') }}</span>
+                                            @endif
                                         </div>
                                     </div>
-                                    <label
-                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; margin-top: 15px">FUERZAS</label>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
-                                        <br>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza1i" id="fuerza1i" placeholder="Eje 1 iz"
-                                                    value="{{ old('fuerza1i') }}">
-                                                @if ($errors->has('fuerza1i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza1i') }}</span>
-                                                @endif
-                                            </div>
-
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="text" class="form-control" name="fuerza1d"
-                                                    id="fuerza1d" placeholder="Eje 1 dr"
-                                                    value="{{ old('fuerza1d') }}">
-                                                @if ($errors->has('fuerza1d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza1d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza2i" id="fuerza2i" placeholder="Eje 2 iz"
-                                                    value="{{ old('fuerza2i') }}">
-                                                @if ($errors->has('fuerza2i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza2i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza2d" id="fuerza2d" placeholder="Eje 2 dr"
-                                                    value="{{ old('fuerza2d') }}">
-                                                @if ($errors->has('fuerza2d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza2d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza3i" id="fuerza3i" placeholder="Eje 3 iz"
-                                                    value="{{ old('fuerza3i') }}">
-                                                @if ($errors->has('fuerza3i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza3i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza3d" id="fuerza3d" placeholder="Eje 3 dr"
-                                                    value="{{ old('fuerza3d') }}">
-                                                @if ($errors->has('fuerza3d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza3d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza4i" id="fuerza4i" placeholder="Eje 4 iz"
-                                                    value="{{ old('fuerza4i') }}">
-                                                @if ($errors->has('fuerza4i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza4i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza4d" id="fuerza4d" placeholder="Eje 4 dr"
-                                                    value="{{ old('fuerza4d') }}">
-                                                @if ($errors->has('fuerza4d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza4d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza5i" id="fuerza5i" placeholder="Eje 5 iz"
-                                                    value="{{ old('fuerza5i') }}">
-                                                @if ($errors->has('fuerza5i'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza5i') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerza5d" id="fuerza5d" placeholder="Eje 5 dr"
-                                                    value="{{ old('fuerza5d') }}">
-                                                @if ($errors->has('fuerza5d'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerza5d') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <label
-                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; margin-top: 15px">FUERZAS
-                                        AUXILIARES</label>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
-
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerzaauxi" id="fuerzaauxi" placeholder="Fuer aux iz"
-                                                    value="{{ old('fuerzaauxi') }}" style="width: 100%">
-                                                @if ($errors->has('fuerzaauxi'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerzaauxi') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="fuerzaauxd" id="fuerzaauxd" placeholder="Fuer aux dr"
-                                                    value="{{ old('fuerzaauxd') }}" style="width: 100%">
-                                                @if ($errors->has('fuerzaauxd'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('fuerzaauxd') }}</span>
-                                                @endif
-                                            </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="text" class="form-control" id="pesaje1d"
+                                                placeholder="Eje 1 dr" name="pesaje1d"
+                                                value="{{ old('pesaje1d') }}">
+                                            @if ($errors->has('pesaje1d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje1d') }}</span>
+                                            @endif
                                         </div>
                                     </div>
-                                    <label
-                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; margin-top: 15px">DESEQUILIBRIOS</label>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="deseje1" id="deseje1" placeholder="Des eje 1"
-                                                    value="{{ old('deseje1') }}" disabled>
-                                                <input type="hidden" class="form-control" step="0.01"
-                                                    name="deseje1_" id="deseje1_">
-                                                @if ($errors->has('deseje1'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('deseje1') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="deseje2" id="deseje2" placeholder="Des eje 2"
-                                                    value="{{ old('deseje2') }}" disabled>
-                                                <input type="hidden" class="form-control" step="0.01"
-                                                    name="deseje2_" id="deseje2_">
-                                                @if ($errors->has('deseje2'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('deseje2') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="deseje3" id="deseje3" placeholder="Des eje 3"
-                                                    value="{{ old('deseje3') }}" disabled>
-                                                <input type="hidden" class="form-control" step="0.01"
-                                                    name="deseje3_" id="deseje3_">
-                                                @if ($errors->has('deseje3'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('deseje3') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="deseje4" id="deseje4" placeholder="Des eje 4"
-                                                    value="{{ old('deseje4') }}" disabled>
-                                                <input type="hidden" class="form-control" step="0.01"
-                                                    name="deseje4_" id="deseje4_">
-                                                @if ($errors->has('deseje4'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('deseje4') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="deseje5" id="deseje5" placeholder="Des eje 5"
-                                                    value="{{ old('deseje5') }}" disabled>
-                                                <input type="hidden" class="form-control" step="0.01"
-                                                    name="deseje5_" id="deseje5_">
-                                                @if ($errors->has('deseje5'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('deseje5') }}</span>
-                                                @endif
-                                            </div>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 2 iz" name="pesaje2i" id="pesaje2i"
+                                                value="{{ old('pesaje2i') }}" style="width: 100%">
+                                            @if ($errors->has('pesaje2i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje2i') }}</span>
+                                            @endif
                                         </div>
                                     </div>
-                                    <label
-                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; margin-top: 15px; background-color:  lightgoldenrodyellow">EFICACIAS</label>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="efiaux" placeholder="Eficacia auxiliar" id="efiaux"
-                                                    value="{{ old('efiaux') }}" disabled>
-                                                <input type="hidden" class="form-control" step="0.01"
-                                                    name="efiaux_" id="efiaux_">
-                                                @if ($errors->has('efiaux'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('efiaux') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <div class="mb-1">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    placeholder="Eficacia total" name="efitotal" id="efitotal"
-                                                    value="{{ old('efitotal') }}" disabled>
-                                                <input type="hidden" class="form-control" step="0.01"
-                                                    name="efitotal_" id="efitotal_">
-                                                @if ($errors->has('efitotal'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('efitotal') }}</span>
-                                                @endif
-                                            </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 2 dr" name="pesaje2d" id="pesaje2d"
+                                                value="{{ old('pesaje2d') }}">
+                                            @if ($errors->has('pesaje2d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje2d') }}</span>
+                                            @endif
                                         </div>
                                     </div>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <button style="width: 100%; height: 55px;"
-                                                class="btn btn-outline-secondary" id="btn-calcular">Calcular
-                                                datos</button>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 3 iz" name="pesaje3i" id="pesaje3i"
+                                                value="{{ old('pesaje3i') }}" style="width: 100%">
+                                            @if ($errors->has('pesaje3i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje3i') }}</span>
+                                            @endif
                                         </div>
-                                        <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                            <button style="width: 100%; height: 55px;" class="btn btn-outline-success"
-                                                id="btn-Guardar" disabled type="submit">Guardar</button>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 3 dr" name="pesaje3d" id="pesaje3d"
+                                                value="{{ old('pesaje3d') }}" style="width: 100%">
+                                            @if ($errors->has('pesaje3d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje3d') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 4 iz" name="pesaje4i" id="pesaje4i"
+                                                value="{{ old('pesaje4i') }}" style="width: 100%">
+                                            @if ($errors->has('pesaje4i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje4i') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 4 dr" name="pesaje4d" id="pesaje4d"
+                                                value="{{ old('pesaje4d') }}" style="width: 100%">
+                                            @if ($errors->has('pesaje4d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje4d') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 5 iz" name="pesaje5i" id="pesaje5i"
+                                                value="{{ old('pesaje5i') }}" style="width: 100%">
+                                            @if ($errors->has('pesaje5i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje5i') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eje 5 dr" name="pesaje5d" id="pesaje5d"
+                                                value="{{ old('pesaje5d') }}" style="width: 100%">
+                                            @if ($errors->has('pesaje5d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('pesaje5d') }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
+                                <label
+                                    style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; margin-top: 15px">FUERZAS</label>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                    <br>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza1i" id="fuerza1i" placeholder="Eje 1 iz"
+                                                value="{{ old('fuerza1i') }}">
+                                            @if ($errors->has('fuerza1i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza1i') }}</span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="text" class="form-control" name="fuerza1d"
+                                                id="fuerza1d" placeholder="Eje 1 dr"
+                                                value="{{ old('fuerza1d') }}">
+                                            @if ($errors->has('fuerza1d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza1d') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza2i" id="fuerza2i" placeholder="Eje 2 iz"
+                                                value="{{ old('fuerza2i') }}">
+                                            @if ($errors->has('fuerza2i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza2i') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza2d" id="fuerza2d" placeholder="Eje 2 dr"
+                                                value="{{ old('fuerza2d') }}">
+                                            @if ($errors->has('fuerza2d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza2d') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza3i" id="fuerza3i" placeholder="Eje 3 iz"
+                                                value="{{ old('fuerza3i') }}">
+                                            @if ($errors->has('fuerza3i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza3i') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza3d" id="fuerza3d" placeholder="Eje 3 dr"
+                                                value="{{ old('fuerza3d') }}">
+                                            @if ($errors->has('fuerza3d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza3d') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza4i" id="fuerza4i" placeholder="Eje 4 iz"
+                                                value="{{ old('fuerza4i') }}">
+                                            @if ($errors->has('fuerza4i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza4i') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza4d" id="fuerza4d" placeholder="Eje 4 dr"
+                                                value="{{ old('fuerza4d') }}">
+                                            @if ($errors->has('fuerza4d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza4d') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza5i" id="fuerza5i" placeholder="Eje 5 iz"
+                                                value="{{ old('fuerza5i') }}">
+                                            @if ($errors->has('fuerza5i'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza5i') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerza5d" id="fuerza5d" placeholder="Eje 5 dr"
+                                                value="{{ old('fuerza5d') }}">
+                                            @if ($errors->has('fuerza5d'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerza5d') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <label
+                                    style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; margin-top: 15px">FUERZAS
+                                    AUXILIARES</label>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerzaauxi" id="fuerzaauxi" placeholder="Fuer aux iz"
+                                                value="{{ old('fuerzaauxi') }}" style="width: 100%">
+                                            @if ($errors->has('fuerzaauxi'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerzaauxi') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="fuerzaauxd" id="fuerzaauxd" placeholder="Fuer aux dr"
+                                                value="{{ old('fuerzaauxd') }}" style="width: 100%">
+                                            @if ($errors->has('fuerzaauxd'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('fuerzaauxd') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <label
+                                    style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; margin-top: 15px">DESEQUILIBRIOS</label>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="deseje1" id="deseje1" placeholder="Des eje 1"
+                                                value="{{ old('deseje1') }}" disabled>
+                                            <input type="hidden" class="form-control" step="0.01"
+                                                name="deseje1_" id="deseje1_">
+                                            @if ($errors->has('deseje1'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('deseje1') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="deseje2" id="deseje2" placeholder="Des eje 2"
+                                                value="{{ old('deseje2') }}" disabled>
+                                            <input type="hidden" class="form-control" step="0.01"
+                                                name="deseje2_" id="deseje2_">
+                                            @if ($errors->has('deseje2'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('deseje2') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="deseje3" id="deseje3" placeholder="Des eje 3"
+                                                value="{{ old('deseje3') }}" disabled>
+                                            <input type="hidden" class="form-control" step="0.01"
+                                                name="deseje3_" id="deseje3_">
+                                            @if ($errors->has('deseje3'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('deseje3') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="deseje4" id="deseje4" placeholder="Des eje 4"
+                                                value="{{ old('deseje4') }}" disabled>
+                                            <input type="hidden" class="form-control" step="0.01"
+                                                name="deseje4_" id="deseje4_">
+                                            @if ($errors->has('deseje4'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('deseje4') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="deseje5" id="deseje5" placeholder="Des eje 5"
+                                                value="{{ old('deseje5') }}" disabled>
+                                            <input type="hidden" class="form-control" step="0.01"
+                                                name="deseje5_" id="deseje5_">
+                                            @if ($errors->has('deseje5'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('deseje5') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <label
+                                    style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; margin-top: 15px; background-color:  lightgoldenrodyellow">EFICACIAS</label>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                name="efiaux" placeholder="Eficacia auxiliar" id="efiaux"
+                                                value="{{ old('efiaux') }}" disabled>
+                                            <input type="hidden" class="form-control" step="0.01"
+                                                name="efiaux_" id="efiaux_">
+                                            @if ($errors->has('efiaux'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('efiaux') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <div class="mb-1">
+                                            <input type="number" class="form-control" step="0.01"
+                                                placeholder="Eficacia total" name="efitotal" id="efitotal"
+                                                value="{{ old('efitotal') }}" disabled>
+                                            <input type="hidden" class="form-control" step="0.01"
+                                                name="efitotal_" id="efitotal_">
+                                            @if ($errors->has('efitotal'))
+                                            <span
+                                                class="error text-danger">{{ $errors->first('efitotal') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <button style="width: 100%; height: 55px;"
+                                            class="btn btn-outline-secondary" id="btn-calcular">Calcular
+                                            datos</button>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
+                                        <button style="width: 100%; height: 55px;" class="btn btn-outline-success"
+                                            id="btn-Guardar" disabled type="submit">Guardar</button>
+                                    </div>
+                                </div>
                             </div>
-
-
-
                         </div>
 
-                    </form>
+
 
                 </div>
+
+                </form>
+
+            </div>
     </section>
     <!-- ======= Contact Section ======= -->
 </main>
@@ -523,6 +447,7 @@
         $(".Vplaca").val(placa2[1]);
         $("#idprueba").val(placa2[0]);
         $("#placa").val(placa2[1]);
+        $("#btn-buscar-placa").click();
         //console.log(placa2);
 
     });
@@ -656,12 +581,21 @@
 
     $("#btn-evento").click(function(ev) {
         ev.preventDefault();
+        document.getElementById("btn-evento").disabled = true;
         if ($(".Vplaca").val() == null || $(".Vplaca").val() == "") {
             Toast.fire({
                 icon: "error",
-                title: "Seleccione una placa"
+                title: "Seleccione una placa",
+                position: "bottom-end"
             });
+            document.getElementById("btn-evento").disabled = false;
         } else {
+             Toast.fire({
+                icon: "info",
+                title: "Creando evento...",
+                timeout: 1000,
+                position: "bottom-end"
+            });
             $.ajax({
                 url: 'getevento/',
                 type: 'post',
@@ -675,10 +609,16 @@
                     _token: $("input[name='_token']").val()
                 },
                 success: function(data, textStatus, jqXHR) {
+                    document.getElementById("btn-evento").disabled = false;
                     Toast.fire({
                         icon: "success",
-                        title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos."
+                        title: "Evento creado, tenga en cuenta el tiempo de duracion de la prueba, para enviar los datos.",
+                        timeout: 1000,
+                        position: "bottom-end"
                     });
+
+                    // Luego mostrar el toast con un pequeño delay
+                    iniciarContadorRegresivo();
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -691,6 +631,84 @@
         }
 
     });
+
+    // Configuración del tiempo (en segundos) - puedes modificar este valor
+    const TIEMPO_PRUEBA = 80; // 5 minutos = 300 segundos
+
+    // Función para iniciar el contador regresivo
+    function iniciarContadorRegresivo() {
+        let tiempoRestante = TIEMPO_PRUEBA;
+        let intervalo;
+
+        // Crear o actualizar el elemento del contador
+        let contadorElemento = $("#contador-regresivo");
+        if (contadorElemento.length === 0) {
+            $("body").append(`
+            <div id="contador-regresivo" style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f8f9fa;
+                border: 2px solid #007bff;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                text-align: center;
+                min-width: 150px;
+            ">
+                <h4 style="margin: 0 0 10px 0; color: #007bff;">Tiempo Restante</h4>
+                <div id="tiempo-display" style="font-size: 24px; font-weight: bold; color: #dc3545;">
+                    ${formatearTiempo(tiempoRestante)}
+                </div>
+                
+            </div>
+        `);
+        }
+
+        // Mostrar el contador
+        $("#contador-regresivo").show();
+
+        // Función para actualizar el contador
+        function actualizarContador() {
+            tiempoRestante--;
+
+            // Actualizar display
+            $("#tiempo-display").text(formatearTiempo(tiempoRestante));
+
+            // Cambiar color según el tiempo
+            if (tiempoRestante <= 60) {
+                $("#tiempo-display").css("color", "#dc3545"); // Rojo
+            } else if (tiempoRestante <= 120) {
+                $("#tiempo-display").css("color", "#ffc107"); // Amarillo
+            }
+
+            // Cuando el tiempo se acaba
+            if (tiempoRestante <= 0) {
+                clearInterval(intervalo);
+                $("#tiempo-display").text("00:00");
+
+                // Mostrar alerta
+                Toast.fire({
+                    icon: "warning",
+                    title: "¡Tiempo agotado! Envíe la prueba ahora.",
+                    position: "bottom-end"
+                });
+            }
+        }
+
+        // Iniciar el intervalo
+        intervalo = setInterval(actualizarContador, 1000);
+
+
+    }
+
+    // Función para formatear el tiempo (segundos a MM:SS)
+    function formatearTiempo(segundos) {
+        const minutos = Math.floor(segundos / 60);
+        const segundosRestantes = segundos % 60;
+        return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
+    }
 
 
     $("#btn-buscar-placa").click(function(e) {
@@ -715,28 +733,42 @@
                     _token: $("input[name='_token']").val()
                 },
                 success: function(data, textStatus, jqXHR) {
-                    console.log(data)
+
                     if (data.length > 0) {
                         $.each(data, function(i, res) {
-                            if (res.observacion == 'Frenos eje 1 izquierdo' || res.observacion == 'Frenos eje 1 Izquierdo')
+                            if (res.estado == 1) {
+                                Toast.fire({
+                                    icon: "info",
+                                    title: "La prueba que se trajo esta en estado <span style='color: #dc3545; font-weight: bold;'>RECHAZADA</span>, por favor verifique bien los datos antes de enviarla nuevamente.",
+                                    timeout: 100000
+                                });
+                            }
+                            if (res.estado == 9) {
+                                Toast.fire({
+                                    icon: "info",
+                                    title: "La prueba que se trajo esta en estado <span style='color: #dc3545; font-weight: bold;'>REASIGNADA</span>, por favor verifique bien los datos antes de enviarla nuevamente.",
+                                    timeout: 100000
+                                });
+                            }
+                            if (res.observacion.trim() == 'Frenos eje 1 izquierdo' || res.observacion.trim() == 'Frenos eje 1 Izquierdo')
                                 $("#fuerza1i").val(res.valor);
-                            if (res.observacion == 'Frenos eje 1 derecho' || res.observacion == 'Frenos eje 1 Derecho')
+                            if (res.observacion.trim() == 'Frenos eje 1 derecho' || res.observacion.trim() == 'Frenos eje 1 Derecho')
                                 $("#fuerza1d").val(res.valor);
-                            if (res.observacion == 'Frenos eje 2 izquierdo' || res.observacion == 'Frenos eje 2 Izquierdo')
+                            if (res.observacion.trim() == 'Frenos eje 2 izquierdo' || res.observacion.trim() == 'Frenos eje 2 Izquierdo')
                                 $("#fuerza2i").val(res.valor);
-                            if (res.observacion == 'Frenos eje 2 derecho' || res.observacion == 'Frenos eje 2 Derecho')
+                            if (res.observacion.trim() == 'Frenos eje 2 derecho' || res.observacion.trim() == 'Frenos eje 2 Derecho')
                                 $("#fuerza2d").val(res.valor);
-                            if (res.observacion == 'Frenos eje 3 izquierdo' || res.observacion == 'Frenos eje 3 Izquierdo')
+                            if (res.observacion.trim() == 'Frenos eje 3 izquierdo' || res.observacion.trim() == 'Frenos eje 3 Izquierdo')
                                 $("#fuerza3i").val(res.valor);
-                            if (res.observacion == 'Frenos eje 3 derecho' || res.observacion == 'Frenos eje 3 Derecho')
+                            if (res.observacion.trim() == 'Frenos eje 3 derecho' || res.observacion.trim() == 'Frenos eje 3 Derecho')
                                 $("#fuerza3d").val(res.valor);
-                            if (res.observacion == 'Frenos eje 4 izquierdo' || res.observacion == 'Frenos eje 4 Izquierdo')
+                            if (res.observacion.trim() == 'Frenos eje 4 izquierdo' || res.observacion.trim() == 'Frenos eje 4 Izquierdo')
                                 $("#fuerza4i").val(res.valor);
-                            if (res.observacion == 'Frenos eje 4 derecho' || res.observacion == 'Frenos eje 4 Derecho')
+                            if (res.observacion.trim() == 'Frenos eje 4 derecho' || res.observacion.trim() == 'Frenos eje 4 Derecho')
                                 $("#fuerza4d").val(res.valor);
-                            if (res.observacion == 'Frenos eje 5 izquierdo' || res.observacion == 'Frenos eje 5 Izquierdo')
+                            if (res.observacion.trim() == 'Frenos eje 5 izquierdo' || res.observacion.trim() == 'Frenos eje 5 Izquierdo')
                                 $("#fuerza5i").val(res.valor);
-                            if (res.observacion == 'Frenos eje 5 derecho' || res.observacion == 'Frenos eje 5 Derecho')
+                            if (res.observacion.trim() == 'Frenos eje 5 derecho' || res.observacion.trim() == 'Frenos eje 5 Derecho')
                                 $("#fuerza5d").val(res.valor);
 
 
@@ -762,12 +794,12 @@
                                 $("#pesaje5d").val(res.valor);
 
 
-                            if (res.observacion == 'FrenoAuxs eje 2 izquierdo' || res.observacion == 'FrenoAuxs eje 2 Izquierdo')
+                            if (res.observacion.trim() == 'FrenoAuxs eje 2 izquierdo' || res.observacion.trim() == 'FrenoAuxs eje 2 Izquierdo' || res.observacion.trim() == 'FrenoAuxs eje 7 izquierdo')
                                 $("#fuerzaauxi").val(res.valor);
-                            if (res.observacion == 'FrenoAuxs eje 2 derecho' || res.observacion == 'FrenoAuxs eje 2 Derecho')
+                            if (res.observacion.trim() == 'FrenoAuxs eje 2 derecho' || res.observacion.trim() == 'FrenoAuxs eje 2 Derecho' || res.observacion.trim() == 'FrenoAuxs eje 7 derecho')
                                 $("#fuerzaauxd").val(res.valor);
-                            
-                            
+
+
                         });
                     } else {
                         Toast.fire({

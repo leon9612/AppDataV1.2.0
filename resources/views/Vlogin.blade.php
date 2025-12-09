@@ -141,6 +141,19 @@
             0% { transform: translate3d(-90px,0,0); }
             100% { transform: translate3d(85px,0,0); }
         }
+        
+        /* Estilo para la versión */
+        .version-info {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
@@ -158,6 +171,11 @@
                 <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(255,255,255,0.5)" />
             </g>
         </svg>
+    </div>
+
+    <!-- Información de versión -->
+    <div class="version-info">
+        <i class="bi bi-tag-fill me-1"></i> V1.2.0
     </div>
 
     <section class="vh-100 d-flex align-items-center">
@@ -216,21 +234,9 @@
                                         @endif
                                     </div>
 
-                                    {{-- <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                                            <label class="form-check-label" for="rememberMe">Recordarme</label>
-                                        </div>
-                                        <a href="#!" class="text-white-50">¿Olvidó su contraseña?</a>
-                                    </div> --}}
-
                                     <button class="btn btn-outline-light btn-lg w-100 btn-login" type="submit" id="btn-login">
                                         <i class="bi bi-box-arrow-in-right me-2"></i>Ingresar
                                     </button>
-                                    
-                                    {{-- <div class="text-center mt-4">
-                                        <p class="text-white-50">¿No tienes una cuenta? <a href="#!" class="text-primary">Regístrate</a></p>
-                                    </div> --}}
                                 </form>
                             </div>
                         </div>

@@ -1,5 +1,10 @@
 @include('layout.heder')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    #btn-buscar-placa {
+        display: none;
+    }
+</style>
 <main id="main">
     <section id="visor" class="contact">
         <div class="container">
@@ -13,106 +18,23 @@
                     <form action="{{ url('/visual') }}" method="POST" class="form-control">
                         @csrf
                         @if ($message = Session::get('succses'))
-                            <div class="alert alert-success" role="alert">
-                                <h4 class="alert-heading">Exitoso</h4>
-                                <p>{{ $message }}</p>
-                            </div>
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Exitoso</h4>
+                            <p>{{ $message }}</p>
+                        </div>
                         @endif
                         @if ($message = Session::get('error'))
-                            <div class="alert alert-danger" role="alert">
-                                <h4 class="alert-heading">Error</h4>
-                                <p>{{ $message }}</p>
-                            </div>
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">Error</h4>
+                            <p>{{ $message }}</p>
+                        </div>
                         @endif
+
                         <div style="margin-top: 15px">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-3 col-lg-3">
-                                    <button style="width: 100%; height: 55px;" class="btn btn-outline-primary"
-                                        id="btn-actuplacas" {{ back() }}>Actualizar placas</button>
-                                </div>
-                                {{-- <div class="col-sm-12 col-md-2 col-lg-2">
-                                    <button style="width: 100%; height: 55px; " class="btn btn-outline-success"
-                                        id="btn-buscar-placa">Buscar datos</button>
-                                </div> --}}
-                                <div class="col-sm-12 col-md-6 col-lg-6" style="align-content: center">
-                                    <div class="input-group mb-3" style="align-content: center;">
-                                        <label class="input-group-text" for="inputGroupSelect01">Seleccionar
-                                            placa</label>
-                                        <select class="form-select selPlaca" id="inputGroupSelect01"
-                                            style="height: 58px" name="selPlaca">
-                                            <option selected>Placas</option>
-                                            @foreach ($placas as $placa)
-                                                <option value="{{ $placa->idprueba . '-' . $placa->placa . '-' . $placa->idhojapruebas }}">
-                                                    {{ $placa->placa }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-4 col-lg-4">
-                                    <div class="input-group mb-3">
-                                        <div class="form-floating mb-3">
-                                            <input type="text" name="Vplaca" class="form-control Vplaca"
-                                                id="floatingInput" placeholder="name@example.com" disabled>
-                                            <input type="hidden" name="idprueba" id="idprueba" class="form-control">
-                                            <input type="hidden" name="placa" id="placa" class="form-control">
-                                            <input type="hidden" name="idhojapruebas" id="idhojapruebas" class="form-control">
-                                            <label for="floatingInput">Placa seleccionada</label>
-                                            @if ($errors->has('idprueba'))
-                                                <span class="error text-danger">{{ $errors->first('idprueba') }}</span>
-                                            @endif
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <?php if (sicov() == 'INDRA') { ?>
-                                <div class="col-sm-12 col-md-2 col-lg-2">
-                                    <button style="width: 100%; height: 55px" class="btn btn-outline-warning"
-                                        id="btn-evento" {{ back() }}>Evento inicial</button>
-                                </div>
-                                <?php } ?>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                    <div class="input-group mb-3" style="align-content: center">
-                                        <label class="input-group-text" for="inputGroupSelect01">Estado</label>
-                                        <select class="form-select selEstado" id="inputGroupSelect01" name="selEstado">
-                                            <option value="2">Aprobado</option>
-                                            <option value="1">Rechazadao</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4 col-lg-4" style="align-content: center">
-                                    <div class="input-group mb-3" style="align-content: center">
-                                        <label class="input-group-text" for="inputGroupSelect01">Usuarios</label>
-                                        <select class="form-select"  name="selUsuario"
-                                            id="selUsuario">
-                                            @foreach ($usuarios as $us)
-                                                <option value="{{ $us->IdUsuario }}">{{ $us->nombre }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-5 col-lg-5" style="align-content: center">
-                                    <div class="input-group mb-3" style="align-content: center">
-                                        <label class="input-group-text" for="inputGroupSelect01">Maquinas</label>
-                                        <select class="form-select"  name="selMaquina"
-                                            id="selMaquina">
-                                            @foreach ($maquinas as $ma)
-                                                <option value="{{ $ma->idmaquina }}">{{ $ma->maquina }} </option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('selMaquina'))
-                                            <span class="error text-danger">{{ $errors->first('selMaquina') }}</span>
-                                        @endif
-
-                                    </div>
-                                </div>
-                            </div>
+                            <x-vehicle-selector
+                                :placas="$placas"
+                                :usuarios="$usuarios"
+                                :maquinas="$maquinas" />
                             <div class="container" style=" margin-top: 2%;  ">
                                 <div class="row">
                                     <label
@@ -127,104 +49,105 @@
                                             <div class="row">
                                                 @for ($eje = 1; $eje <= 5; $eje++)
                                                     @php
-                                                        // Para eje 1 solo hay dos llantas (izquierda y derecha)
-                                                        $llantas =
-                                                            $eje == 1
-                                                                ? [
-                                                                    ['pos' => 'Izquierda', 'tipo' => 'izquierdo'],
-                                                                    ['pos' => 'Derecha', 'tipo' => 'derecho'],
-                                                                ]
-                                                                : [
-                                                                    [
-                                                                        'pos' => 'izquierda Interna',
-                                                                        'tipo' => 'izquierdo_interior',
-                                                                    ],
-                                                                    [
-                                                                        'pos' => 'izquierda Externa',
-                                                                        'tipo' => 'izquierdo',
-                                                                    ],
-                                                                    [
-                                                                        'pos' => 'derecha Interna',
-                                                                        'tipo' => 'derecho_interior',
-                                                                    ],
-                                                                    [
-                                                                        'pos' => 'derecha Externa',
-                                                                        'tipo' => 'derecho',
-                                                                    ],
-                                                                ];
+                                                    // Para eje 1 solo hay dos llantas (izquierda y derecha)
+                                                    $llantas=$eje==1
+                                                    ? [
+                                                    ['pos'=> 'Izquierda', 'tipo' => 'izquierdo'],
+                                                    ['pos' => 'Derecha', 'tipo' => 'derecho'],
+                                                    ]
+                                                    : [
+                                                    [
+                                                    'pos' => 'izquierda Interna',
+                                                    'tipo' => 'izquierdo_interior',
+                                                    ],
+                                                    [
+                                                    'pos' => 'izquierda Externa',
+                                                    'tipo' => 'izquierdo',
+                                                    ],
+                                                    [
+                                                    'pos' => 'derecha Interna',
+                                                    'tipo' => 'derecho_interior',
+                                                    ],
+                                                    [
+                                                    'pos' => 'derecha Externa',
+                                                    'tipo' => 'derecho',
+                                                    ],
+                                                    ];
                                                     @endphp
                                                     <div class="col-lg-12 mb-2">
                                                         <div class="card p-2">
                                                             <strong>Eje {{ $eje }}</strong>
                                                             <div class="row">
                                                                 @foreach ($llantas as $llanta)
-                                                                    <div class="col-md-3 col-sm-6 mb-2">
-                                                                        <label
-                                                                            style="font-size: 13px;">{{ $llanta['pos'] }}</label>
-                                                                        <div class="input-group input-group-sm">
-                                                                            @for ($toma = 0; $toma <= 2; $toma++)
-                                                                                @if ($toma == 0)
-                                                                                    <input type="number"
-                                                                                        step="0.01" min="0"
-                                                                                        max="99"
-                                                                                        name="Labrado_llanta_eje{{ $eje }}_{{ $llanta['tipo'] }}"
-                                                                                        id="Labrado_llanta_eje{{ $eje }}_{{ $llanta['tipo'] }}"
-                                                                                        class="form-control labrado-input"
-                                                                                        placeholder="Toma {{ $toma }}"
-                                                                                        style="width: 33%; font-size: 12px;"
-                                                                                        onblur="saveLabrado(this)" />
-                                                                                @else
-                                                                                    <input type="number"
-                                                                                        step="0.01" min="0"
-                                                                                        max="99"
-                                                                                        name="Labrado_llanta_eje{{ $eje }}_{{ explode('_', $llanta['tipo'])[0] }}{{ $toma }}{{ isset(explode('_', $llanta['tipo'])[1]) ? '_' . explode('_', $llanta['tipo'])[1] : '' }}"
-                                                                                        id="Labrado_llanta_eje{{ $eje }}_{{ explode('_', $llanta['tipo'])[0] }}{{ $toma }}{{ isset(explode('_', $llanta['tipo'])[1]) ? '_' . explode('_', $llanta['tipo'])[1] : '' }}"
-                                                                                        class="form-control"
-                                                                                        placeholder="Toma {{ $toma }}"
-                                                                                        style="width: 33%; font-size: 12px;"
-                                                                                        onblur="saveLabrado(this)" />
-                                                                                @endif
-                                                                            @endfor
-                                                                        </div>
+                                                                <div class="col-md-3 col-sm-6 mb-2">
+                                                                    <label
+                                                                        style="font-size: 13px;">{{ $llanta['pos'] }}</label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        @for ($toma = 0; $toma
+                                                                        <= 2; $toma++)
+                                                                            @if ($toma==0)
+                                                                            <input type="number"
+                                                                            step="0.01" min="0"
+                                                                            max="99"
+                                                                            name="Labrado_llanta_eje{{ $eje }}_{{ $llanta['tipo'] }}"
+                                                                            id="Labrado_llanta_eje{{ $eje }}_{{ $llanta['tipo'] }}"
+                                                                            class="form-control labrado-input"
+                                                                            placeholder="Toma {{ $toma }}"
+                                                                            style="width: 33%; font-size: 12px;"
+                                                                            onblur="saveLabrado(this)" />
+                                                                        @else
+                                                                        <input type="number"
+                                                                            step="0.01" min="0"
+                                                                            max="99"
+                                                                            name="Labrado_llanta_eje{{ $eje }}_{{ explode('_', $llanta['tipo'])[0] }}{{ $toma }}{{ isset(explode('_', $llanta['tipo'])[1]) ? '_' . explode('_', $llanta['tipo'])[1] : '' }}"
+                                                                            id="Labrado_llanta_eje{{ $eje }}_{{ explode('_', $llanta['tipo'])[0] }}{{ $toma }}{{ isset(explode('_', $llanta['tipo'])[1]) ? '_' . explode('_', $llanta['tipo'])[1] : '' }}"
+                                                                            class="form-control"
+                                                                            placeholder="Toma {{ $toma }}"
+                                                                            style="width: 33%; font-size: 12px;"
+                                                                            onblur="saveLabrado(this)" />
+                                                                        @endif
+                                                                        @endfor
                                                                     </div>
+                                                                </div>
                                                                 @endforeach
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @endfor
-                                                <div class="col-lg-12 mb-2">
-                                                    <div class="card p-2">
-                                                        <strong>Llanta de repuesto</strong>
-                                                        <div class="row">
-                                                            <div class="col-md-3 col-sm-6 mb-2">
-                                                                <label style="font-size: 13px;">Repuesto</label>
-                                                                <div class="input-group input-group-sm">
-                                                                    @for ($toma = 0; $toma <= 2; $toma++)
-                                                                        @if ($toma == 0)
+                                                    @endfor
+                                                    <div class="col-lg-12 mb-2">
+                                                        <div class="card p-2">
+                                                            <strong>Llanta de repuesto</strong>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 mb-2">
+                                                                    <label style="font-size: 13px;">Repuesto</label>
+                                                                    <div class="input-group input-group-sm">
+                                                                        @for ($toma = 0; $toma
+                                                                        <= 2; $toma++)
+                                                                            @if ($toma==0)
                                                                             <input type="number" step="0.01"
-                                                                                min="0" max="99"
-                                                                                name="Labrado_repuesto"
-                                                                                id="Labrado_repuesto"
-                                                                                class="form-control"
-                                                                                placeholder="Toma {{ $toma }}"
-                                                                                style="width: 33%; font-size: 12px;"
-                                                                                onblur="saveLabrado(this)" />
+                                                                            min="0" max="99"
+                                                                            name="Labrado_repuesto"
+                                                                            id="Labrado_repuesto"
+                                                                            class="form-control"
+                                                                            placeholder="Toma {{ $toma }}"
+                                                                            style="width: 33%; font-size: 12px;"
+                                                                            onblur="saveLabrado(this)" />
                                                                         @else
-                                                                            <input type="number" step="0.01"
-                                                                                min="0" max="99"
-                                                                                name="Labrado_repuesto_{{ $toma }}"
-                                                                                id="Labrado_repuesto_{{ $toma }}"
-                                                                                class="form-control"
-                                                                                placeholder="Toma {{ $toma }}"
-                                                                                style="width: 33%; font-size: 12px;"
-                                                                                onblur="saveLabrado(this)" />
+                                                                        <input type="number" step="0.01"
+                                                                            min="0" max="99"
+                                                                            name="Labrado_repuesto_{{ $toma }}"
+                                                                            id="Labrado_repuesto_{{ $toma }}"
+                                                                            class="form-control"
+                                                                            placeholder="Toma {{ $toma }}"
+                                                                            style="width: 33%; font-size: 12px;"
+                                                                            onblur="saveLabrado(this)" />
                                                                         @endif
-                                                                    @endfor
+                                                                        @endfor
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                             </div>
 
                                             {{-- <div class="col-sm-12 col-md-4 col-lg-4" style="align-content: left">
@@ -652,7 +575,7 @@
             type: 'post',
             dataType: 'json',
             data: {
-                
+
                 idprueba: $("#idprueba").val(),
                 idresultados: idresultados,
                 tiporesultado: data.id,
@@ -722,7 +645,7 @@
             return;
         }
 
-        if(defect.codigo == '1.1.11.37.6' || defect.codigo == '1.1.11.37.7' || defect.codigo == '1.2.9.18.6' ){
+        if (defect.codigo == '1.1.11.37.6' || defect.codigo == '1.1.11.37.7' || defect.codigo == '1.2.9.18.6') {
             Swal.fire({
                 title: 'Advertencia',
                 text: 'Al agregar este defecto se generará rechazo en la prueba de frenos. ¿Desea continuar?',
@@ -881,6 +804,14 @@
                 });
 
                 $("#tableResultsDefectos tbody tr").each(function() {
+                    var btn = $(this).find(
+                        'button[onclick^="event.preventDefault(); removeDefect(' +
+                        idresultados + ')"]');
+                    if (btn.length > 0) {
+                        $(this).remove();
+                    }
+                });
+                $("#comentariosAdicionales tbody tr").each(function() {
                     var btn = $(this).find(
                         'button[onclick^="event.preventDefault(); removeDefect(' +
                         idresultados + ')"]');
