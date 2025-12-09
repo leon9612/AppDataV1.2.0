@@ -19,6 +19,7 @@ use App\Http\Controllers\Cfrenomotocarro;
 use App\Http\Controllers\Cvisual;
 use App\Http\Controllers\Cactualizar;
 use App\Http\Controllers\Calibracion;
+use App\Http\Controllers\Cfotos;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -51,12 +52,15 @@ Route::resource('frmotocarro', Cfrenomotocarro::class);
 Route::resource('visual', Cvisual::class);
 Route::resource('update', Cactualizar::class);
 Route::resource('cal', Calibracion::class);
+Route::resource('fot', Cfotos::class);
 
 Route::get('/close', [Clogin::class, 'cerrarSesion']);
 Route::post('/buscarvehiculo', [Cprincipal::class, 'getVehiculo']);
 Route::post('/getMaquina', [Cprincipal::class, 'getMaquina']);
 Route::post('/getActualizacion', [Cactualizar::class, 'getActualizacion']);
 Route::post('/getCalibracion', [Calibracion::class, 'getCalibracion']);
+
+Route::post('/consultarImagen', [Cfotos::class, 'consultarImagen']);
 
 Route::post('/getevento', [Cprincipal::class, 'eventosindra']);
 Route::get('/getmac', [Clogin::class, 'getMac']);
