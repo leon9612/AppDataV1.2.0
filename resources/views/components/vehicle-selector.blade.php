@@ -145,7 +145,7 @@
             <span class="input-group-text">
                 <i class="bi bi-gear"></i>
             </span>
-            <select class="form-select" id="inputGroupSelect01" name="selMaquina" id="selMaquina">
+            <select class="form-select"  name="selMaquina" id="selMaquina">
                 @foreach ($maquinas as $ma)
                 <option value="{{ $ma->idmaquina }}">{{ $ma->maquina }} </option>
                 @endforeach
