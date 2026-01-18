@@ -1,16 +1,16 @@
 @include('layout.heder')
+
 <main id="main">
     <section id="visor" class="contact">
         <div class="container">
-
             <div class="section-title">
-                <h2>Gases Motos</h2>
+                <h2>Luces Motos</h2>
             </div>
 
             <div class="row" data-aos="fade-in">
 
                 <div class="col-lg-12 mt-12 mt-lg-12 d-flex align-items-stretch">
-                    <form action="{{ url('/gam') }}" method="POST" class="form-control">
+                    <form action="{{ url('/lum') }}" method="POST" class="form-control">
                         @csrf
                         @if ($message = Session::get('succses'))
                         <div class="alert alert-success" role="alert">
@@ -24,170 +24,176 @@
                             <p>{{ $message }}</p>
                         </div>
                         @endif
-
-
-                        <x-vehicle-selector
-                            :placas="$placas"
-                            :usuarios="$usuarios"
-                            :maquinas="$maquinas" />
-                        <div class="row">
-                            <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Scooter</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selScooter"
-                                        id="selScooter">
-                                        <option value="0">NO</option>
-                                        <option value="1">SI</option>
-                                    </select>
-                                    @if ($errors->has('selScooter'))
-                                    <span class="error text-danger">{{ $errors->first('selScooter') }}</span>
-                                    @endif
-
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Catalizador</label>
-                                    <select class="form-select" id="inputGroupSelect01" name="selCatalizador"
-                                        id="selCatalizador">
-                                        <option value="0">NO</option>
-                                        <option value="1">SI</option>
-                                    </select>
-                                    @if ($errors->has('selCatalizador'))
-                                    <span class="error text-danger">{{ $errors->first('selCatalizador') }}</span>
-                                    @endif
-
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                <div class="input-group mb-3" style="align-content: center">
-                                    <label class="input-group-text" for="inputGroupSelect01">Motocarro</label>
-                                    <select class="form-select" name="selMotocarro" id="selMotocarro">
-                                        <option value="0" selected>NO</option>
-                                        <option value="1">SI</option>
-                                    </select>
-
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="container" style="justify-content: center; display: flex ">
+                        <div style="margin-top: 15px">
+                            <x-vehicle-selector
+                                :placas="$placas"
+                                :usuarios="$usuarios"
+                                :maquinas="$maquinas" />
                             <div class="row">
-                                <label
-                                    style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; margin-top: 15px; background-color: lightgoldenrodyellow">DATOS
-                                    RALENTI</label>
-                                <div style="justify-content: center; display: flex; margin-top: 15px">
+                                <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
+                                    <div class="input-group mb-3" style="align-content: center">
+                                        <label class="input-group-text" for="inputGroupSelect01">Motocarro</label>
+                                        <select class="form-select" name="selMotocarro" id="selMotocarro">
+                                            <option value="0" selected>NO</option>
+                                            <option value="1">SI</option>
+                                        </select>
 
-                                    <br>
-                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                        <div class="input-group mb-3" style="align-content: center">
-                                            <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" name="hc_ralenti"
-                                                    id="hc_ralenti" placeholder="1" value="{{ old('hc_ralenti') }}">
-                                                <label for="floatingInput">HC RALENTI</label>
-                                                @if ($errors->has('hc_ralenti'))
-                                                <span
-                                                    class="error text-danger">{{ $errors->first('hc_ralenti') }}</span>
-                                                @endif
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container" style=" margin-top: 2%; justify-content: center; display: flex ">
+                                <div class="row" style="width: 100%;">
+                                    <label
+                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; padding: 10px; margin-bottom: 20px;">
+                                        DATO LUCES MOTOS
+                                    </label>
+
+                                    <div style="justify-content: center; display: flex; margin-top: 15px; width: 100%;">
+                                        <!-- COLUMNA IZQUIERDA: BAJA (INTENSIDAD) -->
+                                        <div class="col-sm-12 col-md-6" style="border-right: 1px solid #ddd; padding-right: 25px;">
+                                            <!-- Título de la columna BAJA -->
+                                            <div style="text-align: center; margin-bottom: 20px;">
+                                                <label style="color: rgb(0, 4, 255); font-size: 16px; font-weight: bold; background-color: #e6f7ff; padding: 5px 15px; border-radius: 5px;">
+                                                    INTENSIDAD
+                                                </label>
                                             </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                        <div class="input-group mb-3" style="align-content: center">
-                                            <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="co_ralenti" id="co_ralenti" placeholder="1"
-                                                    value="{{ old('co_ralenti') }}">
-                                                <label for="floatingInput">CO RALENTI</label>
-                                                @if ($errors->has('co_ralenti'))
-                                                <span
-                                                    class="error text-danger">{{ $errors->first('co_ralenti') }}</span>
-                                                @endif
+                                            <!-- BAJA 1 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="baja_derecha"
+                                                            id="baja_derecha" placeholder="1"
+                                                            value="{{ old('baja_derecha') }}">
+                                                        <label for="baja_derecha">BAJA 1</label>
+                                                        @if ($errors->has('baja_derecha'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('baja_derecha') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                        <div class="input-group mb-3" style="align-content: center">
-                                            <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="co2_ralenti" id="co2_ralenti" placeholder="1"
-                                                    value="{{ old('co2_ralenti') }}">
-                                                <label for="floatingInput">CO2 RALENTI</label>
-                                                @if ($errors->has('co2_ralenti'))
-                                                <span
-                                                    class="error text-danger">{{ $errors->first('co2_ralenti') }}</span>
-                                                @endif
+                                            <!-- BAJA 2 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="baja_derecha1"
+                                                            id="baja_derecha1" placeholder="1"
+                                                            value="{{ old('baja_derecha1') }}">
+                                                        <label for="baja_derecha1">BAJA 2</label>
+                                                        @if ($errors->has('baja_derecha1'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('baja_derecha1') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
 
+                                            <!-- BAJA 3 (NUEVO) -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="baja_derecha2"
+                                                            id="baja_derecha2" placeholder="1"
+                                                            value="{{ old('baja_derecha2') }}">
+                                                        <label for="baja_derecha2">BAJA 3</label>
+                                                        @if ($errors->has('baja_derecha2'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('baja_derecha2') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-2 col-lg-2" style="align-content: center">
-                                        <div class="input-group mb-3" style="align-content: center">
-                                            <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="o2_ralenti" id="o2_ralenti" placeholder="1"
-                                                    value="{{ old('o2_ralenti') }}">
-                                                <label for="floatingInput">O2 RALENTI</label>
-                                                @if ($errors->has('o2_ralenti'))
-                                                <span
-                                                    class="error text-danger">{{ $errors->first('o2_ralenti') }}</span>
-                                                @endif
+
+                                        <!-- COLUMNA DERECHA: INCLI (INCLINACIÓN) -->
+                                        <div class="col-sm-12 col-md-6" style="padding-left: 25px;">
+                                            <!-- Título de la columna INCLI -->
+                                            <div style="text-align: center; margin-bottom: 20px;">
+                                                <label style="color: rgb(0, 4, 255); font-size: 16px; font-weight: bold; background-color: #e6f7ff; padding: 5px 15px; border-radius: 5px;">
+                                                    INCLINACIÓN
+                                                </label>
                                             </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                        <div class="input-group mb-3" style="align-content: center">
-                                            <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" step="0.01"
-                                                    name="rpm_ralenti" id="rpm_ralenti" placeholder="1"
-                                                    value="{{ old('rpm_ralenti') }}">
-                                                <label for="floatingInput">RPM RALENTI</label>
-                                                @if ($errors->has('rpm_ralenti'))
-                                                <span
-                                                    class="error text-danger">{{ $errors->first('rpm_ralenti') }}</span>
-                                                @endif
+                                            <!-- INCLI 1 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="incli_derecha"
+                                                            id="incli_derecha" placeholder="1"
+                                                            value="{{ old('incli_derecha') }}">
+                                                        <label for="incli_derecha">INCLI 1</label>
+                                                        @if ($errors->has('incli_derecha'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('incli_derecha') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
 
+                                            <!-- INCLI 2 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="incli_derecha1"
+                                                            id="incli_derecha1" placeholder="1"
+                                                            value="{{ old('incli_derecha1') }}">
+                                                        <label for="incli_derecha1">INCLI 2</label>
+                                                        @if ($errors->has('incli_derecha1'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('incli_derecha1') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- INCLI 3 (NUEVO) -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="incli_derecha2"
+                                                            id="incli_derecha2" placeholder="1"
+                                                            value="{{ old('incli_derecha2') }}">
+                                                        <label for="incli_derecha2">INCLI 3</label>
+                                                        @if ($errors->has('incli_derecha2'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('incli_derecha2') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-center align-items-center"
-                            style="margin-top: 20px; margin-bottom: 20px">
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <div class="input-group mb-3">
-                                    <div class="form-floating mb-3" style="margin-top: 29px">
-                                        <input type="number" class="form-control" step="0.01" name="tempMotor"
-                                            id="tempMotor" placeholder="1" value="{{ $tempMotor }}">
-                                        <label for="floatingInput">TEMPERATURA MOTOR</label>
-                                        @if ($errors->has('tempMotor'))
-                                        <span class="error text-danger">{{ $errors->first('tempMotor') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-3 col-lg-3 d-flex align-items-end">
+
+
+
+
+                        <div class="row">
+                            <div style="text-align: center">
                                 <button style="height: 55px; width: 150px" class="btn btn-outline-success"
                                     type="submit">Guardar</button>
+
                             </div>
                         </div>
-
-
+                    </form>
                 </div>
-                </form>
             </div>
-
         </div>
     </section>
     <!-- ======= Contact Section ======= -->
 </main>
+
+
+
+
+
+
 @include('layout.footer')
 <script type="text/javascript">
     const Toast = Swal.mixin({
@@ -201,6 +207,17 @@
             toast.onmouseleave = Swal.resumeTimer;
         }
     });
+    $(".selPlaca").change(function(e) {
+        e.preventDefault();
+        var placa = $('.selPlaca option:selected').attr('value');
+        var placa2 = placa.split("-");
+        $(".Vplaca").val(placa2[1]);
+        $("#placa").val(placa2[1]);
+        $("#idprueba").val(placa2[0]);
+        $("#btn-buscar-placa").click();
+
+    });
+
     $(document).ready(function() {
         if (localStorage.getItem('motocarro') == '1') {
             $('#selMotocarro').val(localStorage.getItem('motocarro'));
@@ -216,28 +233,117 @@
 
     });
 
-    $(".selPlaca").change(function(e) {
-        e.preventDefault();
-        var placa = $('.selPlaca option:selected').attr('value');
-        var placa2 = placa.split("-");
-        $(".Vplaca").val(placa2[1]);
-        $("#placa").val(placa2[1]);
-        $("#idprueba").val(placa2[0]);
-       $("#btn-buscar-placa").click();
+    var getMaquina = function() {
+        $.ajax({
+            url: 'getMaquina/',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                idtipo_prueba: 1,
+                motocarro: $('#selMotocarro').val(),
+                _token: $("input[name='_token']").val()
+            },
+            success: function(data, textStatus, jqXHR) {
 
+                if (data.length > 0) {
+                    $('#selMaquina').empty();
+                    // $('.selMaquina').append('<option value="">Seleccione una maquina</option>');
+                    $.each(data, function(i, res) {
+                        $('#selMaquina').append('<option value="' + res.idmaquina + '">' + res.maquina +
+                            '</option>');
+                    });
+                } else {
+                    Toast.fire({
+                        icon: "error",
+                        title: "No se encontraron maquinas."
+                    });
+                }
+
+
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('error')
+                console.log(jqXHR.responseText)
+                console.log(textStatus)
+                console.log(errorThrown)
+            }
+        });
+    }
+
+    $('#sum_bajas').change(function() {
+        var sumBajas = document.getElementById('sum_bajas').checked;
+        if (sumBajas) {
+            var totalBajas = 0;
+            var bajad = $("#baja_derecha").val() ? $("#baja_derecha").val() : 0;
+            var baja1d = $("#baja_derecha_1").val() ? $("#baja_derecha_1").val() : 0;
+            var bajai = $("#baja_izquierda").val() ? $("#baja_izquierda").val() : 0;
+            var baja1i = $("#baja_izquierda_1").val() ? $("#baja_izquierda_1").val() : 0;
+            var totalBajas = (parseFloat(bajad) + parseFloat(bajai) + parseFloat(baja1d) + parseFloat(baja1i));
+            var total = $("#intensidad_total").val() ? $("#intensidad_total").val() : 0;
+            var n = parseFloat(total) + parseFloat(totalBajas);
+            $("#intensidad_total").val(parseFloat(total) + parseFloat(totalBajas));
+            $("#int_total").html("Intensidad total: " + n);
+        } else {
+            $("#int_total").html("");
+            $("#intensidad_total").val("");
+            document.getElementById('sum_altas').checked = false;
+            document.getElementById('sum-anti').checked = false;
+        }
     });
 
+    $('#sum_altas').change(function() {
+        var sumAltas = document.getElementById('sum_altas').checked;
+        if (sumAltas) {
+            var totalALtas = 0;
+            var altad = $("#alta_derecha").val() ? $("#alta_derecha").val() : 0;
+            var alta1d = $("#alta_derecha_1").val() ? $("#alta_derecha_1").val() : 0;
+            var altai = $("#alta_izquierda").val() ? $("#alta_izquierda").val() : 0;
+            var alta1i = $("#alta_izquierda_1").val() ? $("#alta_izquierda_1").val() : 0;
+            var totalalta = (parseFloat(altad) + parseFloat(altai) + parseFloat(alta1d) + parseFloat(alta1i));
+            var total = $("#intensidad_total").val() ? $("#intensidad_total").val() : 0;
+            var n = parseFloat(total) + parseFloat(totalalta);
+            $("#intensidad_total").val(parseFloat(total) + parseFloat(totalalta));
+            $("#int_total").html("Intensidad total: " + n);
+        } else {
+            $("#int_total").html("");
+            $("#intensidad_total").val("");
+            document.getElementById('sum_bajas').checked = false;
+            document.getElementById('sum-anti').checked = false;
+        }
+    });
 
+    $('#sum-anti').change(function() {
+        var sumAnti = document.getElementById('sum-anti').checked;
+        if (sumAnti) {
+            var totalanti = 0;
+            var antid = $("#anti_derecha").val() ? $("#anti_derecha").val() : 0;
+            var anti1d = $("#anti_derecha_1").val() ? $("#anti_derecha_1").val() : 0;
+            var antii = $("#anti_izquierda").val() ? $("#anti_izquierda").val() : 0;
+            var anti1i = $("#anti_izquierda_1").val() ? $("#anti_izquierda_1").val() : 0;
+            var totalanti = (parseFloat(antid) + parseFloat(antii) + parseFloat(anti1d) + parseFloat(anti1i));
+            var total = $("#intensidad_total").val() ? $("#intensidad_total").val() : 0;
+            var n = parseFloat(total) + parseFloat(totalanti);
+            $("#intensidad_total").val(parseFloat(total) + parseFloat(totalanti));
+            $("#int_total").html("Intensidad total: " + n);
+        } else {
+            $("#int_total").html("");
+            $("#intensidad_total").val("");
+            document.getElementById('sum_bajas').checked = false;
+            document.getElementById('sum_altas').checked = false;
+
+        }
+    });
     $("#btn-evento").click(function(ev) {
         ev.preventDefault();
-         document.getElementById("btn-evento").disabled = true;
+        document.getElementById("btn-evento").disabled = true;
         if ($(".Vplaca").val() == null || $(".Vplaca").val() == "") {
-           Toast.fire({
+            Toast.fire({
                 icon: "error",
                 title: "Seleccione una placa",
                 position: "bottom-end"
             });
-              document.getElementById("btn-evento").disabled = false;
+            document.getElementById("btn-evento").disabled = false;
         } else {
             Toast.fire({
                 icon: "info",
@@ -251,8 +357,8 @@
                 dataType: 'json',
                 data: {
                     placa: $(".Vplaca").val(),
-                    prueba: 'Gases',
-                    tipoprueba: '3',
+                    prueba: 'Luces',
+                    tipoprueba: '1',
                     tipovehiculo: '3',
                     tipoevento: '1',
                     _token: $("input[name='_token']").val()
@@ -282,7 +388,7 @@
     });
 
     // Configuración del tiempo (en segundos) - puedes modificar este valor
-    const TIEMPO_PRUEBA = 60; // 5 minutos = 300 segundos
+    const TIEMPO_PRUEBA = 50; // 5 minutos = 300 segundos
 
     // Función para iniciar el contador regresivo
     function iniciarContadorRegresivo() {
@@ -377,7 +483,7 @@
                 dataType: 'json',
                 data: {
                     placa: $(".Vplaca").val(),
-                    idtipo_prueba: 3,
+                    idtipo_prueba: 1,
                     _token: $("input[name='_token']").val()
                 },
                 success: function(data, textStatus, jqXHR) {
@@ -391,23 +497,20 @@
                                     timeout: 100000
                                 });
                             }
-                             if (res.estado == 9) {
+                            if (res.estado == 9) {
                                 Toast.fire({
                                     icon: "info",
                                     title: "La prueba que se trajo esta en estado <span style='color: #dc3545; font-weight: bold;'>REASIGNADA</span>, por favor verifique bien los datos antes de enviarla nuevamente.",
                                     timeout: 100000
                                 });
                             }
-                            if (res.observacion == 'hc_ralenti')
-                                $("#hc_ralenti").val(res.valor);
-                            if (res.observacion == 'rpm_ralenti')
-                                $("#rpm_ralenti").val(res.valor);
-                            if (res.observacion == 'co_ralenti')
-                                $("#co_ralenti").val(res.valor);
-                            if (res.observacion == 'co2_ralenti')
-                                $("#co2_ralenti").val(res.valor);
-                            if (res.observacion == 'o2_ralenti')
-                                $("#o2_ralenti").val(res.valor);
+                            
+                            if (res.observacion == 'baja_derecha')
+                                $("#baja_derecha").val(res.valor);
+                            if (res.observacion == 'inclinacion_derecha')
+                                $("#incli_derecha").val(res.valor);
+                          
+
 
 
                         });
@@ -430,42 +533,4 @@
             });
         }
     })
-
-    var getMaquina = function() {
-        $.ajax({
-            url: 'getMaquina/',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                idtipo_prueba: 3,
-                motocarro: $('#selMotocarro').val(),
-                _token: $("input[name='_token']").val()
-            },
-            success: function(data, textStatus, jqXHR) {
-                if (data.length > 0) {
-                    $('#selMaquina').empty();
-                    // $('.selMaquina').append('<option value="">Seleccione una maquina</option>');
-                    $.each(data, function(i, res) {
-                        $('#selMaquina').append('<option value="' + res.idmaquina + '">' + res
-                            .maquina +
-                            '</option>');
-                    });
-                } else {
-                    Toast.fire({
-                        icon: "error",
-                        title: "No se encontraron maquinas."
-                    });
-                }
-
-
-
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('error')
-                console.log(jqXHR.responseText)
-                console.log(textStatus)
-                console.log(errorThrown)
-            }
-        });
-    }
 </script>
