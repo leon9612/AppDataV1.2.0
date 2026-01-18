@@ -44,79 +44,129 @@
                             </div>
 
                             <div class="container" style=" margin-top: 2%; justify-content: center; display: flex ">
-                                <div class="row">
+                                <div class="row" style="width: 100%;">
                                     <label
-                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow">DATO
-                                        LUCES MOTOS</label>
-                                    <div style="justify-content: center; display: flex; margin-top: 15px">
+                                        style="color: rgb(0, 4, 255); font-size: 18px; text-align: center; width: 100%; background-color: lightgoldenrodyellow; padding: 10px; margin-bottom: 20px;">
+                                        DATO LUCES MOTOS
+                                    </label>
 
-                                        <br>
-                                        <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                            <div class="input-group mb-3" style="align-content: center">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="baja_derecha"
-                                                        id="baja_derecha" placeholder="1"
-                                                        value="{{ old('baja_derecha') }}">
-                                                    <label for="floatingInput">BAJA 1</label>
-                                                    @if ($errors->has('baja_derecha'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('baja_derecha') }}</span>
-                                                    @endif
-                                                </div>
-
+                                    <div style="justify-content: center; display: flex; margin-top: 15px; width: 100%;">
+                                        <!-- COLUMNA IZQUIERDA: BAJA (INTENSIDAD) -->
+                                        <div class="col-sm-12 col-md-6" style="border-right: 1px solid #ddd; padding-right: 25px;">
+                                            <!-- Título de la columna BAJA -->
+                                            <div style="text-align: center; margin-bottom: 20px;">
+                                                <label style="color: rgb(0, 4, 255); font-size: 16px; font-weight: bold; background-color: #e6f7ff; padding: 5px 15px; border-radius: 5px;">
+                                                    INTENSIDAD
+                                                </label>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                            <div class="input-group mb-3" style="align-content: center">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="incli_derecha"
-                                                        id="incli_derecha" placeholder="1"
-                                                        value="{{ old('incli_derecha') }}">
-                                                    <label for="floatingInput">INCLI 1</label>
-                                                    @if ($errors->has('incli_derecha'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('incli_derecha') }}</span>
-                                                    @endif
-                                                </div>
 
+                                            <!-- BAJA 1 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="baja_derecha"
+                                                            id="baja_derecha" placeholder="1"
+                                                            value="{{ old('baja_derecha') }}">
+                                                        <label for="baja_derecha">BAJA 1</label>
+                                                        @if ($errors->has('baja_derecha'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('baja_derecha') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                            <div class="input-group mb-3" style="align-content: center">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="baja_derecha1"
-                                                        id="baja_derecha1" placeholder="1"
-                                                        value="{{ old('baja_derecha1') }}">
-                                                    <label for="floatingInput">BAJA 2</label>
-                                                    @if ($errors->has('baja_derecha1'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('baja_derecha1') }}</span>
-                                                    @endif
-                                                </div>
 
+                                            <!-- BAJA 2 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="baja_derecha1"
+                                                            id="baja_derecha1" placeholder="1"
+                                                            value="{{ old('baja_derecha1') }}">
+                                                        <label for="baja_derecha1">BAJA 2</label>
+                                                        @if ($errors->has('baja_derecha1'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('baja_derecha1') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3" style="align-content: center">
-                                            <div class="input-group mb-3" style="align-content: center">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="incli_derecha1"
-                                                        id="incli_derecha1" placeholder="1"
-                                                        value="{{ old('incli_derecha1') }}">
-                                                    <label for="floatingInput">INCLI 2</label>
-                                                    @if ($errors->has('incli_derecha1'))
-                                                    <span
-                                                        class="error text-danger">{{ $errors->first('incli_derecha1') }}</span>
-                                                    @endif
-                                                </div>
 
+                                            <!-- BAJA 3 (NUEVO) -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="baja_derecha2"
+                                                            id="baja_derecha2" placeholder="1"
+                                                            value="{{ old('baja_derecha2') }}">
+                                                        <label for="baja_derecha2">BAJA 3</label>
+                                                        @if ($errors->has('baja_derecha2'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('baja_derecha2') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
+                                        <!-- COLUMNA DERECHA: INCLI (INCLINACIÓN) -->
+                                        <div class="col-sm-12 col-md-6" style="padding-left: 25px;">
+                                            <!-- Título de la columna INCLI -->
+                                            <div style="text-align: center; margin-bottom: 20px;">
+                                                <label style="color: rgb(0, 4, 255); font-size: 16px; font-weight: bold; background-color: #e6f7ff; padding: 5px 15px; border-radius: 5px;">
+                                                    INCLINACIÓN
+                                                </label>
+                                            </div>
 
+                                            <!-- INCLI 1 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="incli_derecha"
+                                                            id="incli_derecha" placeholder="1"
+                                                            value="{{ old('incli_derecha') }}">
+                                                        <label for="incli_derecha">INCLI 1</label>
+                                                        @if ($errors->has('incli_derecha'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('incli_derecha') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                            <!-- INCLI 2 -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="incli_derecha1"
+                                                            id="incli_derecha1" placeholder="1"
+                                                            value="{{ old('incli_derecha1') }}">
+                                                        <label for="incli_derecha1">INCLI 2</label>
+                                                        @if ($errors->has('incli_derecha1'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('incli_derecha1') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                            <!-- INCLI 3 (NUEVO) -->
+                                            <div style="margin-bottom: 15px;">
+                                                <div class="input-group" style="align-content: center">
+                                                    <div class="form-floating" style="width: 100%;">
+                                                        <input type="text" class="form-control" name="incli_derecha2"
+                                                            id="incli_derecha2" placeholder="1"
+                                                            value="{{ old('incli_derecha2') }}">
+                                                        <label for="incli_derecha2">INCLI 3</label>
+                                                        @if ($errors->has('incli_derecha2'))
+                                                        <span
+                                                            class="error text-danger">{{ $errors->first('incli_derecha2') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -454,22 +504,12 @@
                                     timeout: 100000
                                 });
                             }
-                            if (res.observacion == 'baja_izquierda')
-                                $("#baja_izquierda").val(res.valor);
-                            if (res.observacion == 'inclinacion_izquierda')
-                                $("#incli_izquierda").val(res.valor);
-                            if (res.observacion == 'alta_izquierda')
-                                $("#alta_izquierda").val(res.valor);
+                            
                             if (res.observacion == 'baja_derecha')
                                 $("#baja_derecha").val(res.valor);
                             if (res.observacion == 'inclinacion_derecha')
                                 $("#incli_derecha").val(res.valor);
-                            if (res.observacion == 'alta_derecha')
-                                $("#alta_derecha").val(res.valor);
-                            if (res.observacion == 'antis_derecha')
-                                $("#anti_derecha").val(res.valor);
-                            if (res.observacion == 'antis_izquierda')
-                                $("#anti_izquierda").val(res.valor);
+                          
 
 
 
